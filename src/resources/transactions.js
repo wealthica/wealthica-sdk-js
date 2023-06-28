@@ -12,7 +12,7 @@ class Transactions {
       throw new Error('Please provide a valid Wealthica account id.');
     }
 
-    let url = `/institutions/${accountId}/transactions`;
+    let url = `/transactions?institutions=${accountId}`;
     const query = getQueryString(params);
     if (query) url = `${url}?${query}`;
 
@@ -32,7 +32,7 @@ class Transactions {
       throw new Error('Please provide a valid Wealthica transaction id.');
     }
 
-    let url = `/institutions/${accountId}/transactions/${txId}`;
+    let url = `/transactions/${txId}`;
     const query = getQueryString(params);
     if (query) url = `${url}?${query}`;
 

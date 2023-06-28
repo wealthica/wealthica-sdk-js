@@ -1,14 +1,8 @@
 # Official Wealthica JS SDK for the Browser & NodeJS
 
-[![Build Status](https://semaphoreci.com/api/v1/wealthica/wealthica-sdk-js/branches/master/badge.svg)](https://semaphoreci.com/wealthica/wealthica-sdk-js)
+## What is Wealthica Connect?
 
-## What is Wealthica? A Unified Cryptocurrency API.
-
-> *“We tried a few crypto data APIs to retrieve our users digital assets, Wealthica is the only one that actually works!”* — Wealth Tracking Dashboard Dev
-
-[Wealthica](https://wealthica.com/) is an API for connecting with cryptocurrency exchanges, wallets and protocols like Bitcoin. Instead of manually integrating with [Crypto Exchange APIs](https://wealthica.com/status/) like [Coinbase API](https://wealthica.com/), [Binance API](https://wealthica.com/), [Bitcoin APIs](https://wealthica.com/), [Crypto APIs](https://wealthica.com/) or the hundreds of other cryptocurrency APIs - you can simply use Wealthica for them all.
-
-Wealthica is the **#1** alternative to the discontinued [Zabo API](https://wealthica.com/).
+[Wealthica](https://wealthica.com/) is an API for connecting with Canadian financial bands and brokerages platforms.
 
 We believe teams and developers should focus on building great products, not worry about the fragmented landscape of exchange APIs and blockchain protocols.
 
