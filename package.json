@@ -1,0 +1,62 @@
+{
+  "name": "wealthica-sdk-js",
+  "version": "0.0.1",
+  "description": "Official Wealthica JS SDK for the Browser & NodeJS",
+  "author": "Wealthica Financial Technology Inc. <hello@wealthica.com> (https://wealthica.com/)",
+  "license": "MIT",
+  "main": "lib/wealthica.js",
+  "types": "lib/wealthica.d.ts",
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "keywords": [
+    "wealthica",
+    "wealthica",
+    "zabo",
+    "cryptocurrency",
+    "wallets",
+    "bitcoin",
+    "ethereum",
+    "metamask",
+    "ledger",
+    "coinbase",
+    "binance",
+    "kraken",
+    "api"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist lib",
+    "build": "webpack",
+    "prepublishOnly": "npm run build",
+    "test": "jest",
+    "watch:test": "jest --watch",
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix ."
+  },
+  "dependencies": {
+    "apisauce": "^2.1.1",
+    "core-js": "^3.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/register": "^7.15.3",
+    "axios-mock-adapter": "^1.20.0",
+    "babel-loader": "^8.2.2",
+    "copy-webpack-plugin": "^10.2.4",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-webpack-plugin": "^3.0.1",
+    "jest": "^27.2.4",
+    "node-polyfill-webpack-plugin": "^1.1.4",
+    "rimraf": "2.6.2",
+    "webpack": "~5.74.0",
+    "webpack-cli": "~4.10.0",
+    "webpack-merge": "^5.8.0"
+  }
+}
