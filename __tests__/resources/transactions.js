@@ -23,11 +23,11 @@ describe('Wealthica Transactions resource', () => {
       expect(h.countRequests(this.userApiMock)).toBe(0);
     });
 
-    test('should GET /institutions/:id/transactions', async () => {
+    test('should GET /transactions?institutions=id', async () => {
       this.userApiMock.onGet().reply(200, [{ test: 'data' }]);
       const transactions = await this.user.transactions.getList({ accountId: 'test' });
       expect(transactions).toEqual(expect.arrayContaining([{ test: 'data' }]));
-      expect(this.userApiMock.history.get[0].url).toBe('/institutions/test/transactions');
+      expect(this.userApiMock.history.get[0].url).toBe('/transactions?institutions=test');
     });
 
     test('should forward query params', async () => {
@@ -43,18 +43,18 @@ describe('Wealthica Transactions resource', () => {
         anything: 'else',
       });
       expect(this.userApiMock.history.get[0].url).toBe(
-        '/institutions/test/transactions?from=2021-01-01&to=2021-10-01&ticker=ABC&wallet=aa%3Abb%3Acc&last=test&limit=10&anything=else',
+        '/transactions?institutions=test?from=2021-01-01&to=2021-10-01&ticker=ABC&wallet=aa%3Abb%3Acc&last=test&limit=10&anything=else',
       );
     });
 
     test('should allow passing an empty `last`', async () => {
       this.userApiMock.onGet().reply(200, [{ test: 'data' }]);
       await this.user.transactions.getList({ accountId: 'test', last: '' });
-      expect(this.userApiMock.history.get[0].url).toBe('/institutions/test/transactions?last=');
+      expect(this.userApiMock.history.get[0].url).toBe('/transactions?institutions=test?last=');
     });
 
     c.shouldHandleResourceEndpointError.bind(this)({
-      mockCall: () => this.userApiMock.onGet('/institutions/test/transactions'),
+      mockCall: () => this.userApiMock.onGet('/transactions?institutions=test'),
       methodCall: () => this.user.transactions.getList({ accountId: 'test' }),
     });
 
@@ -78,7 +78,7 @@ describe('Wealthica Transactions resource', () => {
       expect(h.countRequests(this.userApiMock)).toBe(0);
     });
 
-    test('should GET /institutions/:id/transactions/:txid', async () => {
+    test('should GET /transactions/:txid', async () => {
       this.userApiMock.onGet().reply(200, { test: 'data' });
       const transaction = await this.user.transactions.getOne({
         accountId: 'test',
@@ -86,11 +86,11 @@ describe('Wealthica Transactions resource', () => {
         anything: 'else',
       });
       expect(transaction).toEqual({ test: 'data' });
-      expect(this.userApiMock.history.get[0].url).toBe('/institutions/test/transactions/test?anything=else');
+      expect(this.userApiMock.history.get[0].url).toBe('/transactions/test?anything=else');
     });
 
     c.shouldHandleResourceEndpointError.bind(this)({
-      mockCall: () => this.userApiMock.onGet('/institutions/test/transactions/test'),
+      mockCall: () => this.userApiMock.onGet('/transactions/test'),
       methodCall: () => this.user.transactions.getOne({ accountId: 'test', txId: 'test' }),
     });
 
