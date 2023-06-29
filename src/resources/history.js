@@ -6,13 +6,13 @@ class History {
   }
 
   async getList(options = {}) {
-    const { accountId, ...params } = options;
+    const { institutionId, ...params } = options;
 
-    if (!accountId || typeof accountId !== 'string') {
-      throw new Error('Please provide a valid Wealthica account id.');
+    if (!institutionId || typeof institutionId !== 'string') {
+      throw new Error('Please provide a valid Wealthica institution id.');
     }
 
-    let url = `/institutions/${accountId}/history`;
+    let url = `/institutions/${institutionId}/history`;
     const query = getQueryString(params);
     if (query) url = `${url}?${query}`;
 

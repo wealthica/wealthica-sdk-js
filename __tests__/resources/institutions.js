@@ -42,8 +42,8 @@ describe('Wealthica Institutions resource', () => {
   describe('.getOne()', () => {
     test('should GET /institutions/:id', async () => {
       this.userApiMock.onGet().reply(200, { test: 'data' });
-      const account = await this.user.institutions.getOne('test');
-      expect(account).toEqual({ test: 'data' });
+      const institution = await this.user.institutions.getOne('test');
+      expect(institution).toEqual({ test: 'data' });
       expect(this.userApiMock.history.get[0].url).toBe('/institutions/test');
     });
 
@@ -54,7 +54,7 @@ describe('Wealthica Institutions resource', () => {
     });
 
     c.shouldValidateResourceId.bind(this)({
-      message: 'account id',
+      message: 'institution id',
       isUser: true,
       calls: [
         () => this.user.institutions.getOne(),
@@ -75,13 +75,13 @@ describe('Wealthica Institutions resource', () => {
   describe('.sync()', () => {
     test('should POST /institutions/:id/sync', async () => {
       this.userApiMock.onPost().reply(202, { test: 'data' });
-      const account = await this.user.institutions.sync('test');
-      expect(account).toEqual({ test: 'data' });
+      const institution = await this.user.institutions.sync('test');
+      expect(institution).toEqual({ test: 'data' });
       expect(this.userApiMock.history.post[0].url).toBe('/institutions/test/sync');
     });
 
     c.shouldValidateResourceId.bind(this)({
-      message: 'account id',
+      message: 'institution id',
       isUser: true,
       calls: [
         () => this.user.institutions.sync(),
@@ -102,13 +102,13 @@ describe('Wealthica Institutions resource', () => {
   describe('.remove()', () => {
     test('should DELETE /institutions/:id', async () => {
       this.userApiMock.onDelete().reply(202);
-      const account = await this.user.institutions.remove('test');
-      expect(account).toBeUndefined(); // should not return anything on success
+      const institution = await this.user.institutions.remove('test');
+      expect(institution).toBeUndefined(); // should not return anything on success
       expect(this.userApiMock.history.delete[0].url).toBe('/institutions/test');
     });
 
     c.shouldValidateResourceId.bind(this)({
-      message: 'account id',
+      message: 'institution id',
       isUser: true,
       calls: [
         () => this.user.institutions.remove(),

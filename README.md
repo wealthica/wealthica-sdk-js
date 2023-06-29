@@ -49,7 +49,7 @@ import Wealthica from 'wealthica-sdk-js';
   });
 
   // Call the user-specific API methods
-  const account = await user.institutions.getOne('ACCOUNT_ID');
+  const institution = await user.institutions.getOne('INSTITUTION_ID');
 })();
 ```
 
@@ -79,8 +79,8 @@ const user1 = wealthica.login('USER_ID_1');
 const user2 = wealthica.login('USER_ID_2');
 
 // Call user APIs
-const user1Account = await user1.institutions.getOne('ACCOUNT_ID_1');
-const user2Account = await user2.institutions.getOne('ACCOUNT_ID_2');
+const user1Institution = await user1.institutions.getOne('INSTITUTION_ID_1');
+const user2Institution = await user2.institutions.getOne('INSTITUTION_ID_2');
 ```
 
 ##### From client (browser/ReactNative)
@@ -113,7 +113,7 @@ const wealthica = Wealthica.init({
 const user = wealthica.login();
 
 // Call user APIs
-const account = await user.institutions.getOne('ACCOUNT_ID_1');
+const institution = await user.institutions.getOne('INSTITUTION_ID_1');
 ```
 
 Example server implementation for `authEndpoint`:
@@ -167,7 +167,7 @@ token = await user.getToken({ minimumLifeTime: 600 }); // fetches and returns an
 
 #### user.getConnectData({ provider, redirectURI, state, lang, theme, providersPerLine })
 
-This method returns a Wealthica Connect URL and authentication token for user to connect an account.
+This method returns a Wealthica Connect URL and authentication token for user to connect an institution.
 
 Wealthica Connect URL must be called via POST method and pass token in the form data.
 
@@ -182,8 +182,8 @@ const { url, token } = await user.getConnectData({
   // required for Wealthica Connect drop-in widget, but already handled by the SDK when calling
   // `user.connect()` (defaults to `window.location.origin`).
   // https://wealthica.com/docs/#connect-url-parameters
-  accountId: 'ACCOUNT_ID',
-  // Pass accountId to re-connect an existing account that has expired/revoked credentials
+  institutionId: 'INSTITUTION_ID',
+  // Pass institutionId to re-connect an existing institution that has expired/revoked credentials
   origin: 'YOUR_SITE_ORIGIN',
   state: 'YOUR_APP_STATE', // optional
   lang: 'en', // optional (en | es | fr | it), 'en' by default
@@ -227,39 +227,39 @@ const user2 = wealthica.login('USER_ID_2');
 const { url: url2, token } = await user2.getConnectData();
 ```
 
-#### user.connect({ provider, providers, accountId, lang, theme, providersPerLine, features })
+#### user.connect({ provider, providers, institutionId, lang, theme, providersPerLine, features })
 
-This method starts the Wealthica Connect process inside your webpage/app for user to connect their account.
+This method starts the Wealthica Connect process inside your webpage/app for user to connect their institution.
 
 Connection response are provided via callbacks.
 
 This method accepts the same parameters as `user.getConnectData()` except for `redirectURI`, `origin` and `state`
 
 ```javascript
-user.connect().onConnection(account => {
-  // Send the account to your server
-  sendToServer('/some-route', account);
+user.connect().onConnection(institution => {
+  // Send the institution to your server
+  sendToServer('/some-route', institution);
 }).onError(error => {
-  console.error('account connection error:', error)
+  console.error('institution connection error:', error)
 }).onEvent((name, data) => {
-  console.log('account connection event:', name, data);
+  console.log('institution connection event:', name, data);
 });
 ```
 
-#### user.reconnect(accountId)
+#### user.reconnect(institutionId)
 
-This method starts the Wealthica Connect process to re-connect an existing account that has expired/revoked credentials.
+This method starts the Wealthica Connect process to re-connect an existing institution that has expired/revoked credentials.
 
 Connection response are provided via callbacks.
 
 ```javascript
-user.reconnect('ACCOUNT_ID').onConnection(account => {
-  // Send the account to your server
-  sendToServer('/some-route', account);
+user.reconnect('INSTITUTION_ID').onConnection(institution => {
+  // Send the institution to your server
+  sendToServer('/some-route', institution);
 }).onError(error => {
-  console.error('account connection error:', error)
+  console.error('institution connection error:', error)
 }).onEvent((name, data) => {
-  console.log('account connection event:', name, data);
+  console.log('institution connection event:', name, data);
 });
 ```
 
@@ -275,273 +275,97 @@ This method retrieves the list of institutions for a user.
 const institutions = await user.institutions.getList();
 ```
 
+todo: add response example
 ```json
-[
-  {
-    "id": "603522490d2b02001233a5d6",
-    "provider": {
-      "name": "coinbase",
-      "display_name": "Coinbase",
-      "logo": "https://app.wealthica.com/images/institutions/coinbase.png",
-      "type": "oauth",
-      "scopes": [],
-      "resource_type": "provider"
-    },
-    "balances": [
-      {
-        "ticker": "BTC",
-        "provider_ticker": "BTC",
-        "name": "Bitcoin",
-        "asset_is_verified": null,
-        "asset_type": "",
-        "amount": "0.20210831",
-        "decimals": 8,
-        "fiat_ticker": "USD",
-        "fiat_value": "2021.08",
-        "fiat_asset_is_verified": null,
-        "logo": "https://data.wealthica.com/api/securities/CRYPTO:BTC/logo",
-        "updated_at": 1630412605283,
-        "misc": null,
-        "resource_type": "balance"
-      }
-    ],
-    "blockchain": null,
-    "created_at": 1630412605283,
-    "updated_at": 1630412605283,
-    "resource_type": "account",
-  },
-  {
-    "id": "603522490d2b02001233a5d7",
-    "provider": {
-      "name": "bitcoin",
-      "display_name": "Bitcoin Address",
-      "logo": "https://app.wealthica.com/images/institutions/bitcoin.png",
-      "type": "wallet",
-      "scopes": [],
-      "resource_type": "provider"
-    },
-    "balances": [],
-    "blockchain": null,
-    "created_at": 1630412605283,
-    "updated_at": 1630412605283,
-    "resource_type": "account",
-  }
-]
+
 ```
 
 #### user.institutions.getOne(id)
 
-This method retrieves a single account.
+This method retrieves a single institution.
 
 ```javascript
-const account = await user.institutions.getOne('603522490d2b02001233a5d6');
+const institution = await user.institutions.getOne('603522490d2b02001233a5d6');
 ```
 
+todo: add response example
 ```json
-{
-  "id": "603522490d2b02001233a5d6",
-  "provider": {
-    "name": "coinbase",
-    "display_name": "Coinbase",
-    "logo": "https://app.wealthica.com/images/institutions/coinbase.png",
-    "type": "oauth",
-    "scopes": [],
-    "resource_type": "provider"
-  },
-  "balances": [
-    {
-      "ticker": "BTC",
-      "provider_ticker": "BTC",
-      "name": "Bitcoin",
-      "asset_is_verified": null,
-      "asset_type": "",
-      "amount": "0.20210831",
-      "decimals": 8,
-      "fiat_ticker": "USD",
-      "fiat_value": "2021.08",
-      "fiat_asset_is_verified": null,
-      "logo": "https://data.wealthica.com/api/securities/CRYPTO:BTC/logo",
-      "updated_at": 1630412605283,
-      "misc": null,
-      "resource_type": "balance"
-    }
-  ],
-  "blockchain": null,
-  "created_at": 1630412605283,
-  "updated_at": 1630412605283,
-  "resource_type": "account",
-}
+
 ```
 
 #### user.institutions.sync(id)
 
-This method triggers an account sync.
+This method triggers an institution sync.
 
 ```javascript
-const account = await user.institutions.sync('603522490d2b02001233a5d6');
+const institution = await user.institutions.sync('603522490d2b02001233a5d6');
 ```
 
 #### user.institutions.remove(id)
 
-This method removes a single account from the user.
+This method removes a single institution from the user.
 
 ```javascript
 await user.institutions.remove('603522490d2b02001233a5d6');
 ```
 
-#### user.history.getList({ accountId, from, to, wallet })
+#### user.history.getList({ institutionId, from, to, investments })
 
-This method retrieves the balance history for an account.
+This method retrieves the balance history for an institution.
 
 Returns data within the last 1 year by default.
 
 ```javascript
 const history = await user.history.getList({
-  accountId: '603522490d2b02001233a5d6',
+  institutionId: '603522490d2b02001233a5d6',
   from: '2021-01-01',
   to: '2021-09-09',
-  wallet: 'bitcoin:cash:usd',
+  investment: 'bitcoin:cash:usd',
 });
 ```
 
+todo: add response example
 ```json
-[
-  {
-    "id": "6144755af8a77cae7174afa3",
-    "date": 1630412605283,
-    "wallet": "demo:cash:usd",
-    "fiat_ticker": "USD",
-    "fiat_value": "125.30"
-  },
-  {
-    "id": "6144755af8a77cae7174afa4",
-    "date": 1630412605283,
-    "wallet": "demo:cash:cad",
-    "fiat_ticker": "USD",
-    "fiat_value": "125.30"
-  },
-]
+
 ```
 
-#### user.transactions.getList({ accountId, ticker, from, to, wallet, last, limit })
+#### user.transactions.getList({ institutionId, ticker, from, to, investments, last, limit })
 
-This method retrieves the list of transactions for an account.
+This method retrieves the list of transactions for an institution.
 
 Returns data within the last 1 year by default.
 
 ```javascript
 const transactions = await user.transactions.getList({
-  accountId: '603522490d2b02001233a5d6',
+  institutionId: '603522490d2b02001233a5d6',
   ticker: 'BTC', // optional
   from: '2020-08-31', // optional
   to: '2021-08-31', // optional
-  wallet: 'bitcoin:cash:usd', // optional
+  investment: 'bitcoin:cash:usd', // optional
   last: '603522490d2b02001233a5d6', // optional, blank string is allowed
   limit: 10, // optional
 });
 ```
 
+todo: add response example
 ```json
-[
-  {
-    "id": "603522490d2b02001233a5d6",
-    "status": null,
-    "transaction_type": "deposit",
-    "parts": [
-      {
-        "direction": "received",
-        "ticker": "BTC",
-        "provider_ticker": "BTC",
-        "amount": "1.20210831",
-        "asset_is_verified": null,
-        "fiat_ticker": "USD",
-        "fiat_value": "1234567.8",
-        "fiat_asset_is_verified": null,
-        "other_parties": []
-      }
-    ],
-    "fees": [
-      {
-        "type": null,
-        "ticker": "USD",
-        "provider_ticker": "USD",
-        "amount": "0.5",
-        "asset_is_verified": null,
-        "fiat_ticker": "",
-        "fiat_value": "",
-        "fiat_asset_is_verified": null,
-        "resource_type": "transaction_fee"
-      }
-    ],
-    "misc": [],
-    "fiat_calculated_at": 1630412605283,
-    "initiated_at": 1630412605283,
-    "confirmed_at": 1630412605283,
-    "resource_type": "transaction"
-  },
-  {
-    "id": "603522490d2b02001233a5d7",
-    "status": null,
-    "transaction_type": "deposit",
-    "parts": [],
-    "fees": [],
-    "misc": [],
-    "fiat_calculated_at": 1630412605283,
-    "initiated_at": 1630412605283,
-    "confirmed_at": 1630412605283,
-    "resource_type": "transaction"
-  }
-]
+
 ```
 
-#### user.transactions.getOne({ accountId, txId })
+#### user.transactions.getOne({ institutionId, txId })
 
 This method retrieves a single transaction.
 
 ```javascript
 const transaction = await user.transactions.getOne({
-  accountId: '603522490d2b02001233a5d6',
+  institutionId: '603522490d2b02001233a5d6',
   txId: '603522490d2b02001233a5d6'
 });
 ```
 
+todo: add response example
 ```json
-{
-  "id": "603522490d2b02001233a5d6",
-  "status": null,
-  "transaction_type": "deposit",
-  "parts": [
-    {
-      "direction": "received",
-      "ticker": "BTC",
-      "provider_ticker": "BTC",
-      "amount": "1.20210831",
-      "asset_is_verified": null,
-      "fiat_ticker": "USD",
-      "fiat_value": "1234567.8",
-      "fiat_asset_is_verified": null,
-      "other_parties": []
-    }
-  ],
-  "fees": [
-    {
-      "type": null,
-      "ticker": "USD",
-      "provider_ticker": "USD",
-      "amount": "0.5",
-      "asset_is_verified": null,
-      "fiat_ticker": "",
-      "fiat_value": "",
-      "fiat_asset_is_verified": null,
-      "resource_type": "transaction_fee"
-    }
-  ],
-  "misc": [],
-  "fiat_calculated_at": 1630412605283,
-  "initiated_at": 1630412605283,
-  "confirmed_at": 1630412605283,
-  "resource_type": "transaction"
-}
+
 ```
 
 ### Data APIs
@@ -565,35 +389,9 @@ This method retrieves the list of Wealthica supported providers.
 const providers = await wealthica.providers.getList();
 ```
 
+todo: add response example
 ```json
-[
-  {
-    "name": "coinbase",
-    "display_name": "Coinbase",
-    "logo": "https://app.wealthica.com/images/institutions/coinbase.png",
-    "auth_type": "oauth",
-    "available_scopes": [],
-    "available_currencies": null,
-    "resource_type": "provider",
-    "status": null,
-    "is_beta": true,
-    "connect_notice": "",
-    "credentials": ["code"]
-  },
-  {
-    "name": "bitcoin",
-    "display_name": "Bitcoin Address",
-    "logo": "https://app.wealthica.com/images/institutions/bitcoin.png",
-    "auth_type": "wallet",
-    "available_scopes": [],
-    "available_currencies": null,
-    "resource_type": "provider",
-    "status": null,
-    "is_beta": true,
-    "connect_notice": "",
-    "credentials": ["wallet"]
-  }
-]
+
 ```
 
 #### wealthica.providers.getOne(id)
@@ -604,20 +402,9 @@ This method retrieves a single provider.
 const provider = await wealthica.providers.getOne('coinbase');
 ```
 
+todo: add response example
 ```json
-{
-    "name": "coinbase",
-    "display_name": "Coinbase",
-    "logo": "https://app.wealthica.com/images/institutions/coinbase.png",
-    "auth_type": "oauth",
-    "available_scopes": [],
-    "available_currencies": null,
-    "resource_type": "provider",
-    "status": null,
-    "is_beta": true,
-    "connect_notice": "",
-    "credentials": ["code"]
-  }
+
 ```
 
 ## Development

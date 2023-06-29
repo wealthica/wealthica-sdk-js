@@ -13,8 +13,8 @@ describe('Wealthica User instance (Browser)', () => {
   });
 
   describe('.reconnect()', () => {
-    test('should require accountId', () => {
-      expect(() => this.user.reconnect()).toThrow(/accountId/);
+    test('should require institutionId', () => {
+      expect(() => this.user.reconnect()).toThrow(/institutionId/);
     });
   });
 

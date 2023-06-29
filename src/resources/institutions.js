@@ -17,7 +17,7 @@ class Institutions {
   }
 
   async getOne(id, params = {}) {
-    if (!id || typeof id !== 'string') throw new Error('Please provide a valid Wealthica account id.');
+    if (!id || typeof id !== 'string') throw new Error('Please provide a valid Wealthica institution id.');
 
     let url = `/institutions/${id}`;
     const query = getQueryString(params);
@@ -30,7 +30,7 @@ class Institutions {
   }
 
   async sync(id) {
-    if (!id || typeof id !== 'string') throw new Error('Please provide a valid Wealthica account id.');
+    if (!id || typeof id !== 'string') throw new Error('Please provide a valid Wealthica institution id.');
 
     const response = await this.api.post(`/institutions/${id}/sync`, {});
     if (!response.ok) throw response.originalError;
@@ -39,7 +39,7 @@ class Institutions {
   }
 
   async remove(id) {
-    if (!id || typeof id !== 'string') throw new Error('Please provide a valid Wealthica account id.');
+    if (!id || typeof id !== 'string') throw new Error('Please provide a valid Wealthica institution id.');
 
     const response = await this.api.delete(`/institutions/${id}`);
     if (!response.ok) throw response.originalError;
