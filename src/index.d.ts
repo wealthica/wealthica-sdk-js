@@ -17,7 +17,7 @@ interface APIInterface {
   getTeam(): string;
   getConnectData(options: ConnectDataOptions): Promise<ConnectData>
   connect(options?: APIConfig): APIInterface
-  reconnect(accountId: string): APIUserInterface
+  reconnect(institutionId: string): APIUserInterface
   onConnection(callback: Function): APIInterface
   onError(callback: Function): APIInterface
   onEvent(callback: Function): APIInterface
@@ -45,9 +45,9 @@ interface APIUserInterface extends APIInterface {
 
 interface InstitutionsInterface {
   constructor(api: APIUserInterface)
-  getList(): Promise<Account[]> | Promise<never>
-  getOne(id: string, params?: {}): Promise<Account> | Promise<never>
-  sync(id): Promise<Account> | Promise<never>
+  getList(): Promise<Institution[]> | Promise<never>
+  getOne(id: string, params?: {}): Promise<Institution> | Promise<never>
+  sync(id): Promise<Institution> | Promise<never>
   remove(id): Promise<void> | Promise<never>
 }
 
@@ -82,7 +82,7 @@ type TokenOptions = {
 
 type ConnectDataOptions = {
   provider: string;
-  accountId: string;
+  institutionId: string;
   state: string;
   origin: string | undefined;
   lang: string;
@@ -96,16 +96,16 @@ type ConnectData = {
 }
 
 type TransactionsOptions = {
-  accountId: string;
+  institutionId: string;
   from?: string;
   to?: string;
-  wallet?: string;
+  investments?: string;
   last?: string;
   limit?: number;
 }
 
 type TransactionOptions = {
-  accountId: string;
+  institutionId: string;
   txId: string;
 }
 
@@ -115,8 +115,6 @@ type Part = {
   provider_ticker: string;
   amount: string;
   asset_is_verified?: boolean | null;
-  fiat_ticker: string;
-  fiat_value: string;
   fiat_asset_is_verified?: boolean | null;
   other_parties: any[];
 }
@@ -127,8 +125,6 @@ type Fee = {
   provider_ticker: string;
   amount: string;
   asset_is_verified?: boolean | null;
-  fiat_ticker: string;
-  fiat_value: string;
   fiat_asset_is_verified?: boolean | null;
   resource_type: string;
 }
@@ -147,18 +143,16 @@ type Transactions = {
 }
 
 type HistoryListOptions = {
-  accountId: string;
+  institutionId: string;
   from?: string;
   to?: string;
-  wallet?: string;
+  investments?: string;
 }
 
 type BalanceHistory = {
   id: string;
   date: number;
-  wallet: string;
-  fiat_ticker: string;
-  fiat_value: string;
+  investment: string;
 }
 
 type Provider = {
@@ -175,7 +169,7 @@ type Provider = {
   credentials: string[];
 }
 
-type AccountProvider = {
+type InstitutionProvider = {
   name: string;
   display_name: string;
   logo: string;
@@ -192,8 +186,6 @@ type Balance = {
   asset_type: string;
   amount: string;
   decimals: number;
-  fiat_ticker: string;
-  fiat_value: string;
   fiat_asset_is_verified?: any;
   logo: string;
   updated_at: number;
@@ -201,9 +193,9 @@ type Balance = {
   resource_type: string;
 }
 
-type Account = {
+type Institution = {
   id: string;
-  provider: AccountProvider;
+  provider: InstitutionProvider;
   balances: Balance[];
   blockchain?: any;
   created_at: number;

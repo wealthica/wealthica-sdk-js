@@ -109,8 +109,8 @@ module.exports.testAutoRefreshBehavior = function ({ isBrowser } = {}) {
 
       await this.user.fetchToken();
 
-      const account = await this.user.institutions.getOne('test');
-      expect(account).toEqual({ test: 'data' });
+      const institution = await this.user.institutions.getOne('test');
+      expect(institution).toEqual({ test: 'data' });
       expect(mockObject.history.post).toHaveLength(2);
     });
 
@@ -122,8 +122,8 @@ module.exports.testAutoRefreshBehavior = function ({ isBrowser } = {}) {
       mockObject.onPost().replyOnce(200, { token });
 
       await this.user.fetchToken();
-      const account = await this.user.institutions.getOne('test');
-      expect(account).toEqual({ test: 'data' });
+      const institution = await this.user.institutions.getOne('test');
+      expect(institution).toEqual({ test: 'data' });
       expect(mockObject.history.post).toHaveLength(1);
     });
   });
@@ -146,12 +146,12 @@ module.exports.testGetConnectDataBehavior = function ({ isBrowser } = {}) {
       expect(url).toContain('https://connect.wealthica.com/connect/someprovider?');
     });
 
-    test('should return reconnect url if `accountId` is passed in', async () => {
+    test('should return reconnect url if `institutionId` is passed in', async () => {
       const { url } = await this.user.getConnectData({
-        provider: 'someprovider', // to test accountId taking precedence
-        accountId: 'someaccount',
+        provider: 'someprovider', // to test institutionId taking precedence
+        institutionId: 'someinstitution',
       });
-      expect(url).toContain('https://connect.wealthica.com/reconnect/someaccount?');
+      expect(url).toContain('https://connect.wealthica.com/reconnect/someinstitution?');
     });
 
     test('should use `redirectURI` if passed to the method or Wealthica.init()', async () => {

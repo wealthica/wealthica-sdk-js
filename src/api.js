@@ -172,7 +172,7 @@ class API {
   async getConnectData(options = {}) {
     const {
       provider,
-      accountId,
+      institutionId,
       state,
       origin = this.isBrowser ? window.location.origin : undefined,
       lang,
@@ -208,9 +208,9 @@ class API {
 
     let url = provider ? `${connectURL}/connect/${provider}` : `${connectURL}/connect`;
 
-    // Return reconnect url if accountId is passed in
-    if (accountId) {
-      url = `${connectURL}/reconnect/${accountId}`;
+    // Return reconnect url if institutionId is passed in
+    if (institutionId) {
+      url = `${connectURL}/reconnect/${institutionId}`;
     }
 
     return { url: `${url}?${queryString}`, token };
@@ -222,12 +222,12 @@ class API {
     return this; // return the instance so we can chain the callbacks
   }
 
-  reconnect(accountId) {
-    if (!accountId || typeof accountId !== 'string') {
-      throw new Error('Please provide a valid accountId.');
+  reconnect(institutionId) {
+    if (!institutionId || typeof institutionId !== 'string') {
+      throw new Error('Please provide a valid institutionId.');
     }
 
-    this._connect({ accountId });
+    this._connect({ institutionId });
 
     return this; // return the instance so we can chain the callbacks
   }
@@ -260,10 +260,10 @@ class API {
       try {
         this._widgetOpened = true;
         const {
-          provider, providers, accountId, lang, theme, providersPerLine, features,
+          provider, providers, institutionId, lang, theme, providersPerLine, features,
         } = options;
         const { url, token } = await this.getConnectData({
-          provider, providers, accountId, lang, theme, providersPerLine, features,
+          provider, providers, institutionId, lang, theme, providersPerLine, features,
         });
 
         this.iframe = appendWealthicaIframe();
@@ -303,7 +303,7 @@ class API {
     switch (result.event) {
       case 'success': {
         // Connection success
-        this._triggerCallback(CALLBACK_CONNECTION, result.account);
+        this._triggerCallback(CALLBACK_CONNECTION, result.institution);
         break;
       }
 

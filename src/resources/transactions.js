@@ -6,13 +6,13 @@ class Transactions {
   }
 
   async getList(options = {}) {
-    const { accountId, ...params } = options;
+    const { institutionId, ...params } = options;
 
-    if (!accountId || typeof accountId !== 'string') {
-      throw new Error('Please provide a valid Wealthica account id.');
+    if (!institutionId || typeof institutionId !== 'string') {
+      throw new Error('Please provide a valid Wealthica institution id.');
     }
 
-    let url = `/transactions?institutions=${accountId}`;
+    let url = `/transactions?institutions=${institutionId}`;
     const query = getQueryString(params);
     if (query) url = `${url}?${query}`;
 
@@ -23,10 +23,10 @@ class Transactions {
   }
 
   async getOne(options = {}) {
-    const { accountId, txId, ...params } = options;
+    const { institutionId, txId, ...params } = options;
 
-    if (!accountId || typeof accountId !== 'string') {
-      throw new Error('Please provide a valid Wealthica account id.');
+    if (!institutionId || typeof institutionId !== 'string') {
+      throw new Error('Please provide a valid Wealthica institution id.');
     }
     if (!txId || typeof txId !== 'string') {
       throw new Error('Please provide a valid Wealthica transaction id.');

@@ -25,8 +25,8 @@
 
       <br><br>
 
-      <label for="account_id">Account ID</label>
-      <input type="text" id="account_id" value="" />
+      <label for="institution_id">Institution ID</label>
+      <input type="text" id="institution_id" value="" />
       <button id="connect">Connect</button>
       <button id="reconnect">Reconnect</button>
       <br><br>
@@ -35,7 +35,7 @@
       <br><br>
 
       <button id="get_institutions">Get Institutions</button>
-      <button id="get_account">Get Account</button>
+      <button id="get_institution">Get Institution</button>
       <button id="get_transactions">Get Transaction</button>
 
       <div id="result"></div>
@@ -43,7 +43,7 @@
       <script type="text/javascript">
         let user;
         let wealthica;
-        let accountId;
+        let institutionId;
 
         function login() {
           wealthica = Wealthica.init({
@@ -66,9 +66,9 @@
 
             login();
 
-            user.connect().onConnection(function(account) {
-              console.log('connection success', account);
-              $('#account_id').val(account);
+            user.connect().onConnection(function(institution) {
+              console.log('connection success', institution);
+              $('#institution_id').val(institution);
             }).onError(function(error) {
               console.log('connection error', error);
               $('#connection_error strong').text(error.message);
@@ -76,15 +76,15 @@
           });
 
           $("#reconnect").click(function() {
-            const accountId = $('#account_id').val();
-            if (!accountId) alert('Must enter an Account ID first.')
+            const institutionId = $('#institution_id').val();
+            if (!institutionId) alert('Must enter an Institution ID first.')
             $('#connection_error strong').text('');
 
             login();
 
-            user.reconnect(accountId).onConnection(function(account) {
-              console.log('reconnection success', account);
-              $('#account_id').val(account);
+            user.reconnect(institutionId).onConnection(function(institution) {
+              console.log('reconnection success', institution);
+              $('#institution_id').val(institution);
             }).onError(function(error) {
               console.log('reconnection error', error);
               $('#connection_error strong').text(error.message);
@@ -103,29 +103,29 @@
             }
           });
 
-          $("#get_account").click(async function() {
-            const accountId = $('#account_id').val();
-            if (!accountId) alert('Must connect an account first');
+          $("#get_institution").click(async function() {
+            const institutionId = $('#institution_id').val();
+            if (!institutionId) alert('Must connect an institution first');
 
             login();
 
             try {
-              const account = await user.institutions.getOne(accountId);
+              const institution = await user.institutions.getOne(institutionId);
 
-              $('#result').html('Account:<br><code>' + JSON.stringify(account) + '</code>');
+              $('#result').html('Institution:<br><code>' + JSON.stringify(institution) + '</code>');
             } catch (err) {
               $('#result').html('Error:<br><code>' + err + '</code>');
             }
           });
 
           $("#get_transactions").click(async function() {
-            const accountId = $('#account_id').val();
-            if (!accountId) alert('Must connect an account first');
+            const institutionId = $('#institution_id').val();
+            if (!institutionId) alert('Must connect an institution first');
 
             login();
 
             try {
-              const transactions = await user.transactions.getList({ accountId });
+              const transactions = await user.transactions.getList({ institutionId });
 
               $('#result').html('Transactions:<br><code>' + JSON.stringify(transactions) + '</code>');
             } catch (err) {
