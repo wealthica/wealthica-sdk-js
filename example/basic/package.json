@@ -1,5 +1,5 @@
 {
-  "name": "wealthica-example",
+  "name": "wealthica-connect-example",
   "version": "1.0.0",
   "description": "Example app using Wealthica Connect SDK",
   "author": "Wealthica Financial Technology Inc. <hello@wealthica.com> (https://wealthica.com/)",
@@ -11,6 +11,6 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.17.1",
-    "wealthica-sdk-js": "^1.0.8"
+    "wealthica-sdk-js": "^0.0.3"
   }
 }

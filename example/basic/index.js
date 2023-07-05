@@ -44,12 +44,16 @@ app.get('/', (req, res) => {
 });
 
 app.post('/wealthica/auth', async (req, res) => {
-  // Replace with your own authentication
-  const authorization = req.get('Authorization');
-  const userId = authorization.replace('Bearer ', '');
+  try {
+    // Replace with your own authentication
+    const authorization = req.get('Authorization');
+    const userId = authorization.replace('Bearer ', '');
 
-  const user = wealthica.login(userId);
-  res.json({ token: await user.getToken() });
+    const user = wealthica.login(userId);
+    res.json({ token: await user.getToken() });
+  } catch (err) {
+    res.status(500).json({ error: err.message }).end();
+  }
 });
 
 app.listen(port, () => {
