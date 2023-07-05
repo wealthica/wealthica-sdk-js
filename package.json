@@ -1,6 +1,6 @@
 {
   "name": "wealthica-sdk-js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Official Wealthica JS SDK for the Browser & NodeJS",
   "author": "Wealthica Financial Technology Inc. <hello@wealthica.com> (https://wealthica.com/)",
   "license": "MIT",
