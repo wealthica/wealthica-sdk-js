@@ -7,7 +7,7 @@ class Providers {
 
   async getList(options = {}) {
     let url = '/providers';
-    const query = getQueryString(options);
+    const query = getQueryString({ ...options, format: 'array' });
     if (query) url = `${url}?${query}`;
 
     const response = await this.api.get(url);
