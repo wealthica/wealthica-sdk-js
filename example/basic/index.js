@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 // Import published SDK version
 const Wealthica = require('wealthica-sdk-js');
@@ -10,7 +11,8 @@ const Wealthica = require('wealthica-sdk-js');
 // const Wealthica = require('../../src/index');
 
 const app = express();
-const port = process.env.PORT || 3001;
+app.use(cors());
+const port = process.env.PORT || 3008;
 
 const wealthica = Wealthica.init({
   clientId: process.env.WEALTHICA_CLIENT_ID,
