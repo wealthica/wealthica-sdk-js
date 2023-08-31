@@ -29,7 +29,7 @@ app.get('/assets/config.js', (req, res) => {
   res.send(`
 var constants = {
   WEALTHICA_CLIENT_ID: '${process.env.WEALTHICA_CLIENT_ID}',
-  WEALTHICA_API_URL: '${process.env.WEALTHICA_API_URL || 'https://api.wealthica.com'}',
+  WEALTHICA_API_URL: '${process.env.WEALTHICA_API_URL || 'https://api.wealthica.com/v1'}',
   WEALTHICA_CONNECT_URL: '${process.env.WEALTHICA_CONNECT_URL || 'https://connect.wealthica.com'}',
 };
   `.trim());

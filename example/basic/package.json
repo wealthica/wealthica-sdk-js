@@ -12,6 +12,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.17.1",
-    "wealthica-sdk-js": "^0.0.3"
+    "wealthica-sdk-js": "^0.0.5"
   }
 }
