@@ -9,7 +9,7 @@ declare var Wealthica: {
 interface APIInterface {
   constructor(config: APIConfig)
   __init(): APIInterface
-  login(loginName: string): APIUserInterface
+  login(loginName?: string): APIUserInterface
   getToken(options: TokenOptions): Promise<string>
   fetchToken(): Promise<string>
   authApi: ApisauceInstance
@@ -64,16 +64,17 @@ interface TransactionsInterface {
 
 type APIConfig = {
   clientId: string;
-  secret: string;
+  secret?: string;
   baseURL?: string;
   connectURL?: string;
   redirectURI?: string;
   loginName?: string | null;
-  authEndpoint?: string
+  authEndpoint?: string;
   auth?: {
     headers?: object;
     params?: object;
-  }
+  },
+  authorizer?(callback: Function): void | Promise<void>;
 }
 
 type TokenOptions = {

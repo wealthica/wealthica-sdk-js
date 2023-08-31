@@ -36,11 +36,11 @@ class API {
       throw new Error('Please provide a valid Wealthica clientId.');
     }
 
-    if (this.isNode && (!secret || typeof secret !== 'string')) {
+    if (!this.isClient && (!secret || typeof secret !== 'string')) {
       throw new Error('Please provide a valid Wealthica secret.');
     }
 
-    if (this.isBrowser) {
+    if (this.isClient) {
       const auth = config.auth || {};
       this.config.authEndpoint = this.config.authEndpoint || '/wealthica/auth';
       this.config.auth = {
@@ -71,7 +71,7 @@ class API {
   }
 
   login(loginName) {
-    if (this.isNode && (!loginName || typeof loginName !== 'string')) {
+    if (!this.isClient && (!loginName || typeof loginName !== 'string')) {
       throw new Error('Please provide a valid loginName.');
     }
 
