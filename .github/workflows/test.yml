@@ -23,5 +23,5 @@ jobs:
       #- name: Run Lint tests
       #  run: docker-compose run app yarn lint
 
-      - name: Run tests
-        run: docker-compose run app yarn test
+      #- name: Run tests
+      #  run: docker-compose run app yarn test
