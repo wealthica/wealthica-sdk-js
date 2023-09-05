@@ -4,5 +4,9 @@ All notable changes to the Wealthica Connect SDK across versions will be documen
 
 ## [Unreleased]
 
+## v0.0.6
+- React Native Example
 
-[Unreleased]: https://github.com/wealthica/wealthica-sdk-js/compare/v0.0.1...HEAD
+
+[Unreleased]: https://github.com/wealthica/wealthica-sdk-js/compare/v0.0.6...HEAD
+[Unreleased]: https://github.com/wealthica/wealthica-sdk-js/compare/v0.0.6...v0.0.5
