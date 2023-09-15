@@ -1,4 +1,4 @@
-package com.wealthicaconnectexample;
+package com.wealthica.WealthicaConnectExample;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
