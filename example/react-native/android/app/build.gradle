@@ -73,13 +73,15 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.wealthicaconnectexample"
+    namespace "com.wealthica.WealthicaConnectExample"
     defaultConfig {
-        applicationId "com.wealthicaconnectexample"
+        applicationId "com.wealthica.WealthicaConnectExample"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [appAuthRedirectScheme:"com.wealthica.WealthicaConnectExample"]
+        // manifestPlaceholders.appAuthRedirectScheme "com.wealthica.WealthicaConnectExample"
     }
     signingConfigs {
         debug {

@@ -1,4 +1,4 @@
-package com.wealthicaconnectexample;
+package com.wealthica.WealthicaConnectExample;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
