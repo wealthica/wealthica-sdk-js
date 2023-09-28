@@ -236,7 +236,9 @@ Connection response are provided via callbacks.
 This method accepts the same parameters as `user.getConnectData()` except for `redirectURI`, `origin` and `state`
 
 ```javascript
-user.connect().onConnection(institution => {
+user.connect({
+  // additional options
+}).onConnection(institution => {
   // Send the institution to your server
   sendToServer('/some-route', institution);
 }).onError(error => {
@@ -253,7 +255,9 @@ This method starts the Wealthica Connect process to re-connect an existing insti
 Connection response are provided via callbacks.
 
 ```javascript
-user.reconnect('INSTITUTION_ID').onConnection(institution => {
+user.reconnect('INSTITUTION_ID', {
+  // additional options
+}).onConnection(institution => {
   // Send the institution to your server
   sendToServer('/some-route', institution);
 }).onError(error => {
@@ -427,6 +431,18 @@ yarn build
 yarn build
 yarn test
 ```
+
+### Use GET method in Connect URL instead of POST
+
+Pass additional flag `connectionType: 'GET'` to use GET method in Connect URL instead of POST:
+
+```
+connect({ connectionType: 'GET' })
+reconnect(accountId, { connectionType: 'GET' })
+```
+
+That's useful for developing Connect URL when vite local server used.
+Token exposed in URL when GET method used what is not secure so this feature should be used only for development goals.
 
 ### Release
 ```

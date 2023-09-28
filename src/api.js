@@ -222,12 +222,12 @@ class API {
     return this; // return the instance so we can chain the callbacks
   }
 
-  reconnect(institutionId) {
+  reconnect(institutionId, options = {}) {
     if (!institutionId || typeof institutionId !== 'string') {
       throw new Error('Please provide a valid institutionId.');
     }
 
-    this._connect({ institutionId });
+    this._connect({ institutionId, ...options });
 
     return this; // return the instance so we can chain the callbacks
   }
@@ -260,7 +260,13 @@ class API {
       try {
         this._widgetOpened = true;
         const {
-          provider, providers, institutionId, lang, theme, providersPerLine, features,
+          provider,
+          providers, institutionId,
+          lang,
+          theme,
+          providersPerLine,
+          features,
+          connectionType,
         } = options;
         const { url, token } = await this.getConnectData({
           provider, providers, institutionId, lang, theme, providersPerLine, features,
@@ -268,10 +274,16 @@ class API {
 
         this.iframe = appendWealthicaIframe();
 
-        this.widget = window.open('', this.iframe.name);
-        this.form = appendWealthicaForm({ url, token, iframe: this.iframe });
+        // GET is only for dev because it's not secure
+        if (connectionType === 'GET') {
+          this.widget = window.open(`${url}&token=${token}`, this.iframe.name);
+        } else {
+          this.widget = window.open('', this.iframe.name);
+          this.form = appendWealthicaForm({ url, token, iframe: this.iframe });
 
-        this.form.submit();
+          this.form.submit();
+        }
+
         this.widget.focus();
 
         this._widgetActive = true;
