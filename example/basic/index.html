@@ -1,143 +1,103 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Wealthica Connect Example App</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript" src="/assets/config.js"></script>
 
-    <!-- Import a published version of Wealthica Browser SDK -->
-    <script type="text/javascript" src="https://unpkg.com/wealthica-sdk-js/dist/wealthica.js"></script>
-    <!-- Or import from local build -->
-    <!-- <script type="text/javascript" src="/assets/wealthica.js"></script> -->
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but Wealthica Connect Example App doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app">
-      <h1>Wealthica Connect Example App</h1>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Wealthica Connect Example App</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="text/javascript" src="/assets/config.js"></script>
 
-      <label for="username">Logged in as</label>
-      <input type="text" id="username" value="username_1" />
+  <!-- Import a published version of Wealthica Browser SDK -->
+  <script type="text/javascript" src="https://unpkg.com/wealthica-sdk-js/dist/wealthica.js"></script>
+  <!-- Or import from local build -->
+  <!-- <script type="text/javascript" src="/assets/wealthica.js"></script> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+  <style>
+    .renderjson {
+      background-color: #ebebeb;
+    }
 
-      <br><br>
+    .btn-primary {
+      background-color: #7C2DD4;
+    }
 
-      <label for="institution_id">Institution ID</label>
-      <input type="text" id="institution_id" value="" />
-      <button id="connect">Connect</button>
-      <button id="reconnect">Reconnect</button>
-      <br><br>
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-primary:active {
+      background-color: #5B18A7 !important;
+    }
 
-      <div id="connection_error">Connection error: <strong></strong></div>
-      <br><br>
+    #response_heading {
+      font-weight: 600;
+    }
 
-      <button id="get_institutions">Get Institutions</button>
-      <button id="get_institution">Get Institution</button>
-      <button id="get_transactions">Get Transaction</button>
+    h1 {
+      font-size: 2.25rem;
+    }
 
-      <div id="result"></div>
+    .navbar-brand img {
+      height: 46px;
+    }
 
-      <script type="text/javascript">
-        let user;
-        let wealthica;
-        let institutionId;
+  </style>
+</head>
 
-        function login() {
-          wealthica = Wealthica.init({
-            clientId: constants.WEALTHICA_CLIENT_ID,
-            authEndpoint: '/wealthica/auth', // default value, but set here for the sake of demo
-            auth: {
-              headers: { Authorization: `Bearer ${$('#username').val()}` },
-            },
-            // The following is for Wealthica developers only, remove if you are a Wealthica client
-            baseURL: constants.WEALTHICA_API_URL,
-            connectURL: constants.WEALTHICA_CONNECT_URL,
-          });
+<body>
+  <noscript>
+    <strong>We're sorry but Wealthica Connect Example App doesn't work properly without JavaScript enabled. Please
+      enable it to continue.</strong>
+  </noscript>
+  <div id="app">
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container justify-content-center">
+          <div class="col-md-6">
+            <a class="navbar-brand mt-2 mt-lg-0" href="https://wealthica.com/">
+              <img src="https://app.wealthica.com/images/email_logo.png" alt="Wealthica Logo"
+                loading="lazy" />
+            </a>
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <h1>Wealthica Connect Example App</h1>
 
-          user = wealthica.login();
-        }
+          <div class="mb-3">
+            <label for="username" class="form-label mb-0">Logged in as</label>
+            <input type="text" id="username" value="username_1" class="form-control" />
+          </div>
 
-        $(document).ready(function(){
-          $("#connect").click(function() {
-            $('#connection_error strong').text('');
+          <div class="mb-3">
+            <label for="institution_id" class="form-label  mb-0">Institution ID</label>
+            <input type="text" id="institution_id" value="" class="form-control" />
+          </div>
+          <div class="mb-3 d-grid gap-2">
+            <button id="connect" class="btn btn-primary">Connect</button>
+          </div>
+          <div class="mb-4 d-grid gap-2">
+            <button id="reconnect" class="btn btn-primary">Reconnect</button>
+          </div>
 
-            login();
+          <div class="d-flex justify-content-evenly mb-6 flex-wrap">
+            <button id="get_institutions" class="btn btn-info mb-3">Get All User Institutions</button>
+            <button id="get_institution" class="btn btn-info mb-3">Get Specific Institution</button>
+            <button id="get_transactions" class="btn btn-info mb-3">Get Transaction For Specific Institution</button>
+          </div>
 
-            user.connect({
-              connectionType: constants.WEALTHICA_CONNECT_TYPE,
-            }).onConnection(function(institution) {
-              console.log('connection success', institution);
-              $('#institution_id').val(institution);
-            }).onError(function(error) {
-              console.log('connection error', error);
-              $('#connection_error strong').text(error.message);
-            });
-          });
-
-          $("#reconnect").click(function() {
-            const institutionId = $('#institution_id').val();
-            if (!institutionId) alert('Must enter an Institution ID first.')
-            $('#connection_error strong').text('');
-
-            login();
-
-            user.reconnect(institutionId, {
-              connectionType: constants.WEALTHICA_CONNECT_TYPE,
-            }).onConnection(function(institution) {
-              console.log('reconnection success', institution);
-              $('#institution_id').val(institution);
-            }).onError(function(error) {
-              console.log('reconnection error', error);
-              $('#connection_error strong').text(error.message);
-            });
-          });
-
-          $("#get_institutions").click(async function() {
-            login();
-
-            try {
-              const institutions = await user.institutions.getList();
-
-              $('#result').html('Institutions:<br><code>' + JSON.stringify(institutions) + '</code>');
-            } catch (err) {
-              $('#result').html('Error:<br><code>' + err + '</code>');
-            }
-          });
-
-          $("#get_institution").click(async function() {
-            const institutionId = $('#institution_id').val();
-            if (!institutionId) alert('Must connect an institution first');
-
-            login();
-
-            try {
-              const institution = await user.institutions.getOne(institutionId);
-
-              $('#result').html('Institution:<br><code>' + JSON.stringify(institution) + '</code>');
-            } catch (err) {
-              $('#result').html('Error:<br><code>' + err + '</code>');
-            }
-          });
-
-          $("#get_transactions").click(async function() {
-            const institutionId = $('#institution_id').val();
-            if (!institutionId) alert('Must connect an institution first');
-
-            login();
-
-            try {
-              const transactions = await user.transactions.getList({ institutionId });
-
-              $('#result').html('Transactions:<br><code>' + JSON.stringify(transactions) + '</code>');
-            } catch (err) {
-              $('#result').html('Error:<br><code>' + err + '</code>');
-            }
-          });
-        });
-      </script>
+          <h6 id="response_heading" class="mb-4 text-center"></h6>
+          <div id="result"></div>
+        </div>
+      </div>
     </div>
-  </body>
+  </div>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
+  <script type="text/javascript" src="/renderjson.js"></script>
+  <script type="text/javascript" src="/main.js"></script>
+</body>
+
 </html>
