@@ -42,6 +42,16 @@ app.get('/assets/wealthica.js', (req, res) => {
   res.sendFile(path.join(__dirname, '../../dist/wealthica.js'));
 });
 
+app.get('/renderjson.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(path.join(__dirname, '/node_modules/renderjson/renderjson.js'));
+});
+
+app.get('/main.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(path.join(__dirname, '/main.js'));
+});
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'));
 });
