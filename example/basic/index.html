@@ -35,6 +35,10 @@
       font-weight: 600;
     }
 
+    h1 {
+      font-size: 2.25rem;
+    }
+
     .navbar-brand img {
       height: 46px;
     }
@@ -52,7 +56,7 @@
       <div class="container justify-content-center">
           <div class="col-md-6">
             <a class="navbar-brand mt-2 mt-lg-0" href="https://wealthica.com/">
-              <img src="https://wealthica.com/assets/svg/wealthica-7bd8f9c3ae.svg" alt="Wealthica Logo"
+              <img src="https://app.wealthica.com/images/email_logo.png" alt="Wealthica Logo"
                 loading="lazy" />
             </a>
         </div>
@@ -75,14 +79,14 @@
           <div class="mb-3 d-grid gap-2">
             <button id="connect" class="btn btn-primary">Connect</button>
           </div>
-          <div class="mb-3 d-grid gap-2">
+          <div class="mb-4 d-grid gap-2">
             <button id="reconnect" class="btn btn-primary">Reconnect</button>
           </div>
 
-          <div class="d-flex justify-content-evenly mb-6">
-            <button id="get_institutions" class="btn btn-info">Get Institutions</button>
-            <button id="get_institution" class="btn btn-info">Get Institution</button>
-            <button id="get_transactions" class="btn btn-info">Get Transaction</button>
+          <div class="d-flex justify-content-evenly mb-6 flex-wrap">
+            <button id="get_institutions" class="btn btn-info mb-3">Get All User Institutions</button>
+            <button id="get_institution" class="btn btn-info mb-3">Get Specific Institution</button>
+            <button id="get_transactions" class="btn btn-info mb-3">Get Transaction For Specific Institution</button>
           </div>
 
           <h6 id="response_heading" class="mb-4 text-center"></h6>
