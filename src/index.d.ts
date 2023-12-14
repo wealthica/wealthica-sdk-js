@@ -16,8 +16,8 @@ interface APIInterface {
   api: ApisauceInstance
   getTeam(): string;
   getConnectData(options: ConnectDataOptions): Promise<ConnectData>
-  connect(options?: APIConfig): APIInterface
-  reconnect(institutionId: string): APIUserInterface
+  connect(options?: ConnectDataOptions): APIInterface
+  reconnect(institutionId: string, options: ConnectDataOptions): APIUserInterface
   onConnection(callback: Function): APIInterface
   onError(callback: Function): APIInterface
   onEvent(callback: Function): APIInterface
@@ -89,6 +89,7 @@ type ConnectDataOptions = {
   lang: string;
   redirectURI: string;
   providers: Array<string> | undefined;
+  providerGroups: Array<string> | undefined;
 }
 
 type ConnectData = {
