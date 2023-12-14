@@ -188,6 +188,7 @@ const { url, token } = await user.getConnectData({
   state: 'YOUR_APP_STATE', // optional
   lang: 'en', // optional (en | es | fr | it), 'en' by default
   providers: ['wise', 'stockchase'], // optional, ignored if `provider` is also passed in.
+  providerGroups: ['core', 'thirdparty'], // optional, ['core'] by default
   theme: 'light', // optional (light | dark), 'light' by default
   providersPerLine: 1, // optional (1 | 2), 2 by default
   features: 'feature1,feature2', // optional, a comma-separated list of features. undefined by default

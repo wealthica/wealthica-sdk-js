@@ -178,6 +178,7 @@ class API {
       lang,
       redirectURI = this.config.redirectURI,
       providers,
+      providerGroups = ['core'],
       theme,
       providersPerLine,
       features,
@@ -195,6 +196,7 @@ class API {
       origin,
       // 'provider' param in priority, skip 'providers' param if 'provider' is set
       providers: !provider && Array.isArray(providers) && providers.length ? providers.join(',') : undefined,
+      provider_groups: providerGroups.join(','),
       theme: ['light', 'dark'].includes(theme) ? theme : 'light',
       providers_per_line: (providersPerLine && ['1', '2'].includes(providersPerLine.toString())) ? providersPerLine.toString() : '2',
       features,
@@ -261,7 +263,9 @@ class API {
         this._widgetOpened = true;
         const {
           provider,
-          providers, institutionId,
+          providers,
+          providerGroups,
+          institutionId,
           lang,
           theme,
           providersPerLine,
@@ -269,7 +273,14 @@ class API {
           connectionType,
         } = options;
         const { url, token } = await this.getConnectData({
-          provider, providers, institutionId, lang, theme, providersPerLine, features,
+          provider,
+          providers,
+          providerGroups,
+          institutionId,
+          lang,
+          theme,
+          providersPerLine,
+          features,
         });
 
         this.iframe = appendWealthicaIframe();

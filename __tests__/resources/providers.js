@@ -14,11 +14,11 @@ describe('Wealthica Providers resource', () => {
       this.apiMock.onGet().reply(200, [{ test: 'data' }]);
       const providers = await this.wealthica.providers.getList();
       expect(providers).toEqual(expect.arrayContaining([{ test: 'data' }]));
-      expect(this.apiMock.history.get[0].url).toBe('/providers');
+      expect(this.apiMock.history.get[0].url).toBe('/providers?format=array');
     });
 
     c.shouldHandleResourceEndpointError.bind(this)({
-      mockCall: () => this.apiMock.onGet('/providers'),
+      mockCall: () => this.apiMock.onGet('/providers?format=array'),
       methodCall: () => this.wealthica.providers.getList(),
     });
   });
