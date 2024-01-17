@@ -15,6 +15,9 @@ class Transactions {
       institutions.push(options.institutionId);
     }
 
+    // eslint-disable-next-line no-param-reassign
+    delete options.institutionId;
+
     const query = getQueryString({
       ...options,
       institutions,
