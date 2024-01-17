@@ -105,11 +105,24 @@ type ConnectData = {
 
 type TransactionsOptions = {
   institutions?: Array<string>;
+  investments?: Array<string>;
+  groups?: Array<string>;
   from?: string;
   to?: string;
-  investments?: string;
+  assets?: boolean;
+  liabilities?: boolean;
+  banking?: boolean;
+  types?: Array<string>;
+  deleted?: Boolean;
+  invalid?: Boolean;
+  new?: Boolean;
+  peek?: Boolean;
+  missing?: Boolean;
   last?: string;
   limit?: number;
+  sort?: string;
+  security?: Boolean;
+  skip_date_filter?: Boolean;
   institutionId?: string;
 }
 
@@ -118,12 +131,11 @@ type TransactionOptions = {
 }
 
 type PositionsOptions = {
+  groups?: Array<string>;
   institutions?: Array<string>;
-  groupIds?: Array<string>;
-  institutionIds?: Array<string>;
-  investmentIds?: Array<string>;
-  includeAssets?: Boolean;
-  includeLiabilities?: Boolean;
+  investments?: Array<string>;
+  assets?: Boolean;
+  liabilities?: Boolean;
   banking?: Boolean;
 }
 
@@ -256,7 +268,7 @@ type Security = {
 }
 
 type PositionInvestment = {
-  institution: Institution;
+  institution: string;
   investment: string;
   currency: string;
   quantity: number;
