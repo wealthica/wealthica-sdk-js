@@ -41,6 +41,7 @@ interface APIUserInterface extends APIInterface {
   institutions: InstitutionsInterface
   history: HistoryInterface
   transactions: TransactionsInterface
+  positions: PositionsInterface
 }
 
 interface InstitutionsInterface {
@@ -60,6 +61,11 @@ interface TransactionsInterface {
   constructor(api: APIUserInterface)
   getList(options: TransactionsOptions): Promise<Transactions[]> | Promise<never>
   getOne(options: TransactionOptions): Promise<Transactions> | Promise<never>
+}
+
+interface PositionsInterface {
+  constructor(api: APIUserInterface)
+  getList(options: PositionsOptions): Promise<Position[]> | Promise<never>
 }
 
 type APIConfig = {
@@ -98,17 +104,27 @@ type ConnectData = {
 }
 
 type TransactionsOptions = {
-  institutionId: string;
+  institutions?: Array<string>;
   from?: string;
   to?: string;
   investments?: string;
   last?: string;
   limit?: number;
+  institutionId?: string;
 }
 
 type TransactionOptions = {
-  institutionId: string;
   txId: string;
+}
+
+type PositionsOptions = {
+  institutions?: Array<string>;
+  groupIds?: Array<string>;
+  institutionIds?: Array<string>;
+  investmentIds?: Array<string>;
+  includeAssets?: Boolean;
+  includeLiabilities?: Boolean;
+  banking?: Boolean;
 }
 
 type Part = {
@@ -203,4 +219,50 @@ type Institution = {
   created_at: number;
   updated_at: number;
   resource_type: string;
+}
+
+type Position = {
+  _id: string;
+  class: string;
+  classes: {
+    class: string;
+    weight: number;
+  };
+  category: string;
+  categories: Array<string>;
+  security: Security;
+  investments: Array<PositionInvestment>
+  quantity: number;
+  book_value: number;
+  market_value: number;
+  gain_amount: number;
+  gain_percent: number;
+}
+
+type Security = {
+  _id: string;
+  currency: string;
+  symbol: string;
+  type: string;
+  name: string;
+  aliases: Array<string>;
+  last_price: number;
+  last_date: string;
+  high_price: number;
+  high_date: string;
+  low_price: number;
+  low_date: string;
+  cusip: string;
+}
+
+type PositionInvestment = {
+  institution: Institution;
+  investment: string;
+  currency: string;
+  quantity: number;
+  book_value: number;
+  market_value: number;
+  value: number;
+  gain_amount: number;
+  gain_percent: number;
 }
