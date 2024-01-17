@@ -8,10 +8,10 @@ class Transactions {
   async getList(options = {}) {
     let url = '/transactions';
 
-    const { institutions } = options;
+    const institutions = options.institutions || [];
 
     // Add institutionId for backward compatibility
-    if (options.institutionId && !options.institutions.includes(options.institutionId)) {
+    if (options.institutionId && !institutions.includes(options.institutionId)) {
       institutions.push(options.institutionId);
     }
 
