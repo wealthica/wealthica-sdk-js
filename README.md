@@ -372,9 +372,9 @@ todo: add response example
 
 ```
 
-#### user.positions.getList({ txId })
+#### user.positions.getList({ institutions })
 
-This method retrieves a single transaction.
+This method retrieves user positions.
 
 ```javascript
 const positions = await user.positions.getList({
