@@ -342,13 +342,13 @@ Returns data within the last 1 year by default.
 
 ```javascript
 const transactions = await user.transactions.getList({
-  institutionId: '603522490d2b02001233a5d6',
-  ticker: 'BTC', // optional
+  institutions: ['603522490d2b02001233a5d6'],
   from: '2020-08-31', // optional
   to: '2021-08-31', // optional
-  investment: 'bitcoin:cash:usd', // optional
+  investment: 'wise:cash:usd', // optional
   last: '603522490d2b02001233a5d6', // optional, blank string is allowed
   limit: 10, // optional
+  institutionId: '603522490d2b02001233a5d6', // Deprecated, use institutions prop
 });
 ```
 
@@ -357,14 +357,28 @@ todo: add response example
 
 ```
 
-#### user.transactions.getOne({ institutionId, txId })
+#### user.transactions.getOne({ txId })
 
 This method retrieves a single transaction.
 
 ```javascript
 const transaction = await user.transactions.getOne({
-  institutionId: '603522490d2b02001233a5d6',
   txId: '603522490d2b02001233a5d6'
+});
+```
+
+todo: add response example
+```json
+
+```
+
+#### user.positions.getList({ txId })
+
+This method retrieves a single transaction.
+
+```javascript
+const positions = await user.positions.getList({
+  institutions: ['603522490d2b02001233a5d6']
 });
 ```
 

@@ -103,12 +103,29 @@ $(document).ready(() => {
     login();
 
     try {
-      const transactions = await user.transactions.getList({ institutionId });
+      const transactions = await user.transactions.getList({ institutions: [institutionId] });
 
       $('#response_heading').html('All transactions:');
       printResult(transactions);
     } catch (error) {
       console.log('get transaction error', error);
+      $('#response_heading').html('');
+      $('#result').html(`<code>${error}</code>`);
+    }
+  });
+
+  $('#get_positions').click(async () => {
+    const institutionId = $('#institution_id').val();
+
+    login();
+
+    try {
+      const positions = await user.positions.getList({ institutions: [institutionId] });
+
+      $('#response_heading').html('All positions:');
+      printResult(positions);
+    } catch (error) {
+      console.log('get positions error', error);
       $('#response_heading').html('');
       $('#result').html(`<code>${error}</code>`);
     }
