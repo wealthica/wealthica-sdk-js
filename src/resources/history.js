@@ -6,14 +6,8 @@ class History {
   }
 
   async getList(options = {}) {
-    const { institutionId, ...params } = options;
-
-    if (!institutionId || typeof institutionId !== 'string') {
-      throw new Error('Please provide a valid Wealthica institution id.');
-    }
-
-    let url = `/institutions/${institutionId}/history`;
-    const query = getQueryString(params);
+    let url = '/history';
+    const query = getQueryString(options);
     if (query) url = `${url}?${query}`;
 
     const response = await this.api.get(url);

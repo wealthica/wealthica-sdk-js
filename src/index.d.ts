@@ -173,10 +173,10 @@ type Transactions = {
 }
 
 type HistoryListOptions = {
-  institutionId: string;
+  institutions: string[];
   from?: string;
   to?: string;
-  investments?: string;
+  investments?: string[];
 }
 
 type BalanceHistory = {

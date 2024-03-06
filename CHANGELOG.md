@@ -4,6 +4,9 @@ All notable changes to the Wealthica Connect SDK across versions will be documen
 
 ## [Unreleased]
 
+## [0.0.12]
+-  Fix history.getList() method
+
 ## [0.0.11]
 - Fix passing params to transactions.getList()
 - Use institutions instead of institutionId for transactions.getList()

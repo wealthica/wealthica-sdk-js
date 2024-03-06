@@ -314,7 +314,7 @@ This method removes a single institution from the user.
 await user.institutions.remove('603522490d2b02001233a5d6');
 ```
 
-#### user.history.getList({ institutionId, from, to, investments })
+#### user.history.getList({ institutions, from, to, investments })
 
 This method retrieves the balance history for an institution.
 
@@ -322,10 +322,10 @@ Returns data within the last 1 year by default.
 
 ```javascript
 const history = await user.history.getList({
-  institutionId: '603522490d2b02001233a5d6',
+  institutions: ['603522490d2b02001233a5d6'],
   from: '2021-01-01',
   to: '2021-09-09',
-  investment: 'bitcoin:cash:usd',
+  investments: ['bitcoin:cash:usd'],
 });
 ```
 

@@ -114,6 +114,23 @@ $(document).ready(() => {
     }
   });
 
+  $('#get_history').click(async () => {
+    const institutionId = $('#institution_id').val();
+
+    login();
+
+    try {
+      const history = await user.history.getList({ institutions: [institutionId] });
+
+      $('#response_heading').html('History:');
+      printResult(history);
+    } catch (error) {
+      console.log('get history error', error);
+      $('#response_heading').html('');
+      $('#result').html(`<code>${error}</code>`);
+    }
+  });
+
   $('#get_positions').click(async () => {
     const institutionId = $('#institution_id').val();
 
