@@ -507,10 +507,10 @@
   "resolved" "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   "version" "1.1.2"
 
-"wealthica-sdk-js@^0.0.9":
-  "integrity" "sha512-WSm+Aq5aT43uO7ZgobTaRqJn6TBDucTjA9gTPpWCwxM4FToVHkbQppt5xueA3aD6nZLcL0j+EmTEkSYn6Qqqog=="
-  "resolved" "https://registry.npmjs.org/wealthica-sdk-js/-/wealthica-sdk-js-0.0.9.tgz"
-  "version" "0.0.9"
+"wealthica-sdk-js@^0.0.12":
+  "integrity" "sha512-mbpWvqOzwpxp+jI8VNLIm4ZmZF/5q6dUJYAERwATld/SMIiBk9DH9s+76TfQfGyNwH6ljXKlpAaIgmI0D4MxzA=="
+  "resolved" "https://registry.npmjs.org/wealthica-sdk-js/-/wealthica-sdk-js-0.0.12.tgz"
+  "version" "0.0.12"
   dependencies:
     "apisauce" "^2.1.1"
     "core-js" "^3.17.3"
