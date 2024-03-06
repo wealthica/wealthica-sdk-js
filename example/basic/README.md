@@ -13,7 +13,7 @@ To get started and to receive your need to receive **Client ID** and **Client Se
 ```bash
 # Clone the repo to your computer, and inside `wealthica-sdk-js`:
 
-# (Optional) install SDK dependencies and build, if you want to import the local build
+# Install SDK dependencies and build the SDK
 yarn install
 yarn build
 

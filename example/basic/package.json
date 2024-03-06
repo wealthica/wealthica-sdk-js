@@ -13,6 +13,6 @@
     "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "renderjson": "^1.4.0",
-    "wealthica-sdk-js": "^0.0.12"
+    "wealthica-sdk-js": "../../"
   }
 }
