@@ -4,6 +4,9 @@ All notable changes to the Wealthica Connect SDK across versions will be documen
 
 ## [Unreleased]
 
+## [0.0.14]
+-  Use local build in basic example
+
 ## [0.0.12]
 -  Fix history.getList() method
 
