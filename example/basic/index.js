@@ -3,12 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-
-// Import published SDK version
 const Wealthica = require('wealthica-sdk-js');
-
-// Or import from this local repo. Need to run `yarn build` in wealthica-sdk-js directory first
-// const Wealthica = require('../../src/index');
 
 const app = express();
 app.use(cors());
