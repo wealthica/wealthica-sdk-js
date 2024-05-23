@@ -34,8 +34,12 @@ $(document).ready(() => {
   $('#connect').click(() => {
     login();
 
+    extraOptions = $('#extra_options').val().trim() || undefined;
+    if (extraOptions) extraOptions = JSON.parse(extraOptions);
+
     user.connect({
       connectionType: constants.WEALTHICA_CONNECT_TYPE,
+      ...extraOptions,
     }).onConnection((institution) => {
       console.log('connection success', institution);
       $('#institution_id').val(institution);
@@ -55,8 +59,12 @@ $(document).ready(() => {
 
     login();
 
+    extraOptions = $('#extra_options').val().trim() || undefined;
+    if (extraOptions) extraOptions = JSON.parse(extraOptions);
+
     user.reconnect(institutionId, {
       connectionType: constants.WEALTHICA_CONNECT_TYPE,
+      ...extraOptions,
     }).onConnection((institution) => {
       console.log('reconnection success', institution);
       $('#institution_id').val(institution);
