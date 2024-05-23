@@ -34,12 +34,14 @@ $(document).ready(() => {
   $('#connect').click(() => {
     login();
 
+    extraOptions = $('#extra_options').val().trim() || undefined;
+    if (extraOptions) extraOptions = JSON.parse(extraOptions);
+
     user.connect({
       connectionType: constants.WEALTHICA_CONNECT_TYPE,
-      providerGroups: ['core', 'thirdparty'],
-      // redirectURI: 'https://integration04-api.private.fin.ag/v3/wealthica/callback',
-    }).onConnection((institution, data) => {
-      console.log('connection success', institution, data);
+      ...extraOptions,
+    }).onConnection((institution) => {
+      console.log('connection success', institution);
       $('#institution_id').val(institution);
       $('#response_heading').html(`Connected successfully with ID: ${institution}`);
     }).onError((error) => {
@@ -57,10 +59,14 @@ $(document).ready(() => {
 
     login();
 
+    extraOptions = $('#extra_options').val().trim() || undefined;
+    if (extraOptions) extraOptions = JSON.parse(extraOptions);
+
     user.reconnect(institutionId, {
       connectionType: constants.WEALTHICA_CONNECT_TYPE,
-    }).onConnection((institution, data) => {
-      console.log('reconnection success', institution, data);
+      ...extraOptions,
+    }).onConnection((institution) => {
+      console.log('reconnection success', institution);
       $('#institution_id').val(institution);
     }).onError((error) => {
       console.log('reconnection error', error);
