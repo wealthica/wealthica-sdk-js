@@ -271,6 +271,7 @@ class API {
           providersPerLine,
           features,
           connectionType,
+          origin,
         } = options;
         const { url, token } = await this.getConnectData({
           provider,
@@ -281,6 +282,7 @@ class API {
           theme,
           providersPerLine,
           features,
+          origin,
         });
 
         this.iframe = appendWealthicaIframe();
