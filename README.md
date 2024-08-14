@@ -218,7 +218,6 @@ const wealthica = Wealthica.init({
   clientId: 'YOUR_CLIENT_ID',
   secret: 'YOUR_CLIENT_SECRET',
   redirectURI: 'YOUR_REDIRECT_URI',
-  origin: 'YOUR_SITE_ORIGIN',
 });
 
 const user1 = wealthica.login('USER_ID_1');
@@ -228,13 +227,13 @@ const user2 = wealthica.login('USER_ID_2');
 const { url: url2, token } = await user2.getConnectData();
 ```
 
-#### user.connect({ provider, providers, institutionId, lang, theme, providersPerLine, features })
+#### user.connect({ provider, providers, institutionId, lang, theme, providersPerLine, features, origin })
 
 This method starts the Wealthica Connect process inside your webpage/app for user to connect their institution.
 
 Connection response are provided via callbacks.
 
-This method accepts the same parameters as `user.getConnectData()` except for `redirectURI`, `origin` and `state`
+This method accepts the same parameters as `user.getConnectData()` except for `redirectURI` and `state`
 
 ```javascript
 user.connect({
