@@ -67,8 +67,8 @@ $(document).ready(() => {
     user.reconnect(institutionId, {
       connectionType: constants.WEALTHICA_CONNECT_TYPE,
       ...extraOptions,
-    }).onConnection((institution) => {
-      console.log('reconnection success', institution);
+    }).onConnection((institution, data) => {
+      console.log('reconnection success', institution, data);
       $('#institution_id').val(institution);
     }).onError((error) => {
       console.log('reconnection error', error);
