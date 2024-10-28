@@ -326,13 +326,19 @@ class API {
     switch (result.event) {
       case 'success': {
         // Connection success
-        this._triggerCallback(CALLBACK_CONNECTION, result.institution);
+        this._triggerCallback(CALLBACK_CONNECTION, {
+          institution: result.institution,
+          institution_type: result.institution_type,
+        });
         break;
       }
 
       case 'error': {
         // Connection error
-        this._triggerCallback(CALLBACK_ERROR, result.error);
+        this._triggerCallback(CALLBACK_ERROR, {
+          error: result.error,
+        });
+
         break;
       }
 
@@ -396,13 +402,24 @@ class API {
   _triggerCallback(callback, payload = {}) {
     // onConnection and onError callbacks are only triggered once per widget session.
     if ([CALLBACK_CONNECTION, CALLBACK_ERROR].includes(callback)) {
-      // Mark widget as inactive so it's cleaned up by the doneWatcher.
+      // Mark widget as inactive, so it's cleaned up by the doneWatcher.
       this._widgetActive = false;
+      let additionalData = null;
 
       if (this._widgetOpened) {
         this._widgetOpened = false;
 
-        if (this[callback]) this[callback](payload);
+        if (callback === CALLBACK_CONNECTION) {
+          additionalData = {
+            // Institution type passed only on success,
+            // on error it appears in error object, so we don't need to duplicate it
+            institution_type: payload.institution_type,
+          };
+        }
+
+        if (this[callback]) {
+          this[callback](payload.institution || payload.error, additionalData);
+        }
       }
 
       return;

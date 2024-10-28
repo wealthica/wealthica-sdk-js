@@ -38,6 +38,8 @@ $(document).ready(() => {
       connectionType: constants.WEALTHICA_CONNECT_TYPE,
     }).onConnection((institution) => {
       console.log('connection success', institution);
+    }).onConnection((institution, data) => {
+      console.log('connection success', institution, data);
       $('#institution_id').val(institution);
       $('#response_heading').html(`Connected successfully with ID: ${institution}`);
     }).onError((error) => {
