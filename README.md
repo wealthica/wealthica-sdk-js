@@ -238,7 +238,8 @@ This method accepts the same parameters as `user.getConnectData()` except for `r
 ```javascript
 user.connect({
   // additional options
-}).onConnection(institution => {
+}).onConnection((institution, data) => {
+  console.log('provider', data.provider);
   // Send the institution to your server
   sendToServer('/some-route', institution);
 }).onError(error => {
@@ -257,7 +258,8 @@ Connection response are provided via callbacks.
 ```javascript
 user.reconnect('INSTITUTION_ID', {
   // additional options
-}).onConnection(institution => {
+}).onConnection(((institution, data) => {
+  console.log('provider', data.provider);
   // Send the institution to your server
   sendToServer('/some-route', institution);
 }).onError(error => {
