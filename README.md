@@ -239,7 +239,7 @@ This method accepts the same parameters as `user.getConnectData()` except for `r
 user.connect({
   // additional options
 }).onConnection((institution, data) => {
-  console.log(data.institution_type);
+  console.log('provider', data.provider);
   // Send the institution to your server
   sendToServer('/some-route', institution);
 }).onError(error => {
@@ -259,7 +259,7 @@ Connection response are provided via callbacks.
 user.reconnect('INSTITUTION_ID', {
   // additional options
 }).onConnection(((institution, data) => {
-  console.log(data.institution_type);
+  console.log('provider', data.provider);
   // Send the institution to your server
   sendToServer('/some-route', institution);
 }).onError(error => {

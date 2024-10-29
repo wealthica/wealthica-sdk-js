@@ -330,7 +330,7 @@ class API {
         // Connection success
         this._triggerCallback(CALLBACK_CONNECTION, {
           institution: result.institution,
-          institution_type: result.institution_type,
+          provider: result.provider,
         });
         break;
       }
@@ -415,7 +415,7 @@ class API {
           additionalData = {
             // Institution type passed only on success,
             // on error it appears in error object, so we don't need to duplicate it
-            institution_type: payload.institution_type,
+            provider: payload.provider,
           };
         }
 

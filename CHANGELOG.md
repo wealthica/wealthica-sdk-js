@@ -5,7 +5,7 @@ All notable changes to the Wealthica Connect SDK across versions will be documen
 ## [Unreleased]
 
 ## [0.0.16]
-- Pass institution_type on success connection in additional `data` object, ex. `onConnection(institution, data)`
+- Pass provider (`institution.type`) on success connection in additional `data` object, ex. `onConnection(institution, data)`
 
 ## [0.0.15]
 - Fix support for origin in connect() method
