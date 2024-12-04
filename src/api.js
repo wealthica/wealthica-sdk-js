@@ -385,7 +385,7 @@ class API {
   // eslint-disable-next-line camelcase
   _closeWidgetWithError(error_type, message) {
     this._closeWidget();
-    this._triggerCallback(CALLBACK_ERROR, { error_type, message });
+    this._triggerCallback(CALLBACK_ERROR, { error: { error_type, message } });
   }
 
   _closeWidget() {
