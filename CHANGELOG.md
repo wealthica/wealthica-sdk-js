@@ -4,6 +4,9 @@ All notable changes to the Wealthica Connect SDK across versions will be documen
 
 ## [Unreleased]
 
+## [0.0.17]
+- Fix missed onError on closing widget
+
 ## [0.0.16]
 - Pass provider (`institution.type`) on success connection in additional `data` object, ex. `onConnection(institution, data)`
 
