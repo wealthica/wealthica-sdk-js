@@ -15,10 +15,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: docker-compose run app yarn
+        run: docker compose run app yarn
 
       - name: Run build
-        run: docker-compose run app yarn build
+        run: docker compose run app yarn build
 
       #- name: Run Lint tests
       #  run: docker-compose run app yarn lint
