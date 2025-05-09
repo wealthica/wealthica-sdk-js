@@ -182,8 +182,21 @@ class API {
       theme,
       providersPerLine,
       features,
+      webhookURI,
     } = options;
     const { clientId, connectURL } = this.config;
+
+    // Validate webhookURI if provided
+    if (webhookURI) {
+      try {
+        const url = new URL(webhookURI);
+        if (url.protocol !== 'https:') {
+          throw new Error('Webhook URI must use HTTPS protocol');
+        }
+      } catch (error) {
+        throw new Error(`Invalid webhook URI: ${error.message}`);
+      }
+    }
 
     // Get a token with at least 10 minutes left
     const token = await this.getToken({ minimumLifetime: 600 });
@@ -200,6 +213,7 @@ class API {
       theme: ['light', 'dark'].includes(theme) ? theme : 'light',
       providers_per_line: (providersPerLine && ['1', '2'].includes(providersPerLine.toString())) ? providersPerLine.toString() : '2',
       features,
+      webhook_uri: webhookURI,
     };
 
     // Cleanup blank params
@@ -272,6 +286,7 @@ class API {
           features,
           connectionType,
           origin,
+          webhookURI,
         } = options;
         const { url, token } = await this.getConnectData({
           provider,
@@ -283,6 +298,7 @@ class API {
           providersPerLine,
           features,
           origin,
+          webhookURI,
         });
 
         this.iframe = appendWealthicaIframe();
@@ -303,7 +319,7 @@ class API {
         this._addListeners();
         this._addWatchers();
       } catch (error) {
-        this._closeWidgetWithError(500, 'Connection refused');
+        this._closeWidgetWithError(500, error.message || 'Connection refused');
       }
     })();
   }

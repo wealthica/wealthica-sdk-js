@@ -4,6 +4,9 @@ All notable changes to the Wealthica Connect SDK across versions will be documen
 
 ## [Unreleased]
 
+## [0.0.18]
+- Add support `webhookURI` param in `user.getConnectData()` and `user.connect()` method, for setting specific webhook URI for the connection
+
 ## [0.0.17]
 - Fix missed onError on closing widget
 

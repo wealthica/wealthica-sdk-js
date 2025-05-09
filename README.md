@@ -165,7 +165,7 @@ token = await user.getToken(); // fetches and returns a new token
 token = await user.getToken({ minimumLifeTime: 600 }); // fetches and returns another new token
 ```
 
-#### user.getConnectData({ provider, redirectURI, state, lang, theme, providersPerLine })
+#### user.getConnectData({ provider, redirectURI, state, lang, theme, providersPerLine, webhookURI })
 
 This method returns a Wealthica Connect URL and authentication token for user to connect an institution.
 
@@ -192,6 +192,7 @@ const { url, token } = await user.getConnectData({
   theme: 'light', // optional (light | dark), 'light' by default
   providersPerLine: 1, // optional (1 | 2), 2 by default
   features: 'feature1,feature2', // optional, a comma-separated list of features. undefined by default
+  webhookURI: 'YOUR_WEBHOOK_URI', // optional, URL to receive webhook notifications (must be HTTPS)
 });
 // {
 //   url: "https://connect.wealthica.com/connect/coinbase?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&origin=YOUR_SITE_ORIGIN&state=YOUR_APP_STATE&lang=en&theme=light&providersPerLine=2",
@@ -227,7 +228,7 @@ const user2 = wealthica.login('USER_ID_2');
 const { url: url2, token } = await user2.getConnectData();
 ```
 
-#### user.connect({ provider, providers, institutionId, lang, theme, providersPerLine, features, origin })
+#### user.connect({ provider, providers, institutionId, lang, theme, providersPerLine, features, origin, webhookURI })
 
 This method starts the Wealthica Connect process inside your webpage/app for user to connect their institution.
 
@@ -238,6 +239,7 @@ This method accepts the same parameters as `user.getConnectData()` except for `r
 ```javascript
 user.connect({
   // additional options
+  webhookURI: 'YOUR_WEBHOOK_URI', // optional, URL to receive webhook notifications (must be HTTPS)
 }).onConnection((institution, data) => {
   console.log('provider', data.provider);
   // Send the institution to your server
@@ -249,7 +251,7 @@ user.connect({
 });
 ```
 
-#### user.reconnect(institutionId)
+#### user.reconnect(institutionId, { lang, theme, features, origin, webhookURI })
 
 This method starts the Wealthica Connect process to re-connect an existing institution that has expired/revoked credentials.
 
@@ -258,6 +260,7 @@ Connection response are provided via callbacks.
 ```javascript
 user.reconnect('INSTITUTION_ID', {
   // additional options
+  webhookURI: 'YOUR_WEBHOOK_URI', // optional, URL to receive webhook notifications (must be HTTPS)
 }).onConnection(((institution, data) => {
   console.log('provider', data.provider);
   // Send the institution to your server
