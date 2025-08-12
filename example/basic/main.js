@@ -122,6 +122,31 @@ $(document).ready(() => {
     }
   });
 
+  $('#get_transactions_analyzed').click(async () => {
+    const institutionId = $('#institution_id').val();
+
+    login();
+
+    try {
+      // Build the URL with query parameters
+      let url = '/transactions/analyzed';
+      if (institutionId) {
+        url += `?institutions=${encodeURIComponent(institutionId)}`;
+      }
+
+      // Make the API call directly using user.userApi
+      const response = await user.userApi.get(url);
+      if (!response.ok) throw response.originalError;
+
+      $('#response_heading').html('Analyzed transactions:');
+      printResult(response.data);
+    } catch (error) {
+      console.log('get analyzed transactions error', error);
+      $('#response_heading').html('');
+      $('#result').html(`<code>${error}</code>`);
+    }
+  });
+
   $('#get_history').click(async () => {
     const institutionId = $('#institution_id').val();
 
