@@ -31,6 +31,9 @@ function login() {
 }
 
 $(document).ready(() => {
+  if (constants.FRONTEND_DEFAULT_USERNAME) $('#username').val(constants.FRONTEND_DEFAULT_USERNAME);
+  if (constants.FRONTEND_DEFAULT_OPTIONS) $('#extra_options').val(constants.FRONTEND_DEFAULT_OPTIONS);
+
   $('#connect').click(() => {
     login();
 
