@@ -272,6 +272,49 @@ user.reconnect('INSTITUTION_ID', {
 });
 ```
 
+### Feature Flags
+
+The `features` parameter accepts a comma-separated list of feature flags to enable specific behaviors in the Connect widget.
+
+#### Available Feature Flags
+
+**`quick_retry`** *(Available from v0.0.19+)*
+
+Enables a quick retry option when temporary connection failures occur (e.g., timeout, temporary API issues).
+
+- **Default:** Disabled
+- **Behavior:** When enabled, users see a retry button instead of automatic widget closure after temporary failures
+- **Retry Limit:** One retry attempt per session
+
+**Usage Example:**
+
+```javascript
+// Enable quick retry feature
+user.connect({
+  provider: 'td',
+  features: 'quick_retry',
+  // ... other options
+}).onConnection((institution) => {
+  console.log('Connected:', institution);
+}).onError((error) => {
+  console.error('Error:', error);
+}).onEvent((name, data) => {
+  // Listen for retry events
+  if (name === 'RETRY_ATTEMPT') {
+    console.log('User is retrying connection');
+  }
+  if (name === 'RETRY_DECLINED') {
+    console.log('User declined to retry');
+  }
+});
+
+// Enable multiple features
+user.connect({
+  features: 'quick_retry,another_feature',
+  // ... other options
+});
+```
+
 ### User APIs
 
 These methods return user data and thus require a Wealthica Connect SDK User instance. They automatically fetch a new token if necessary so you would not be bothered with tokens logic.

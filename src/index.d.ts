@@ -96,6 +96,10 @@ type ConnectDataOptions = {
   redirectURI: string;
   providers: Array<string> | undefined;
   providerGroups: Array<string> | undefined;
+  theme: string;
+  providersPerLine: number | string;
+  features: string;
+  webhookURI: string;
 }
 
 type ConnectData = {
