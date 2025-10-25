@@ -21,12 +21,15 @@ const wealthica = Wealthica.init({
 // To pass some configurations to the frontend
 app.get('/assets/config.js', (req, res) => {
   res.setHeader('Content-Type', 'application/javascript');
+
   res.send(`
 var constants = {
   WEALTHICA_CLIENT_ID: '${process.env.WEALTHICA_CLIENT_ID}',
   WEALTHICA_API_URL: '${process.env.FRONTEND_WEALTHICA_API_URL || process.env.WEALTHICA_API_URL || 'https://api.wealthica.com/v1'}',
   WEALTHICA_CONNECT_URL: '${process.env.WEALTHICA_CONNECT_URL || 'https://connect.wealthica.com'}',
   WEALTHICA_CONNECT_TYPE: '${process.env.WEALTHICA_CONNECT_TYPE || 'POST'}',
+  FRONTEND_DEFAULT_USERNAME: '${process.env.FRONTEND_DEFAULT_USERNAME || 'username_1'}',
+  FRONTEND_DEFAULT_OPTIONS: '${process.env.FRONTEND_DEFAULT_OPTIONS || ''}',
 };
   `.trim());
 });

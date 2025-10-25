@@ -4,6 +4,11 @@ All notable changes to the Wealthica Connect SDK across versions will be documen
 
 ## [Unreleased]
 
+## [0.0.19]
+- Add support for `quick_retry` feature flag to enable quick retry option on temporary connection failures
+- Add TypeScript definitions for `theme`, `providersPerLine`, `features`, and `webhookURI` in ConnectDataOptions
+- Update example app to allow customizing default username & options via .env file
+
 ## [0.0.18]
 - Add support `webhookURI` param in `user.getConnectData()` and `user.connect()` method, for setting specific webhook URI for the connection
 

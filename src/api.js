@@ -54,6 +54,7 @@ class API {
     this._onWidgetMessage = this._onMessage.bind(this);
     this._widgetOpened = false;
     this._widgetActive = false;
+    this._features = null;
   }
 
   _init() {
@@ -288,6 +289,9 @@ class API {
           origin,
           webhookURI,
         } = options;
+
+        // Store features for timeout calculation
+        this._features = features;
         const { url, token } = await this.getConnectData({
           provider,
           providers,
@@ -374,10 +378,14 @@ class API {
   }
 
   _addWatchers() {
-    // Watch for widget timeout (10 minutes)
+    // Determine timeout based on features
+    const hasQuickRetry = this._features && this._features.split(',').map((f) => f.trim()).includes('quick_retry');
+    const timeoutMinutes = hasQuickRetry ? 30 : 10;
+
+    // Watch for widget timeout
     const timeoutWatcher = setTimeout(() => {
       this._closeWidgetWithError(400, 'Connection timeout');
-    }, 10 * 60 * 1000);
+    }, timeoutMinutes * 60 * 1000);
 
     // Watch for widget status (whether closed by user or successfully finished) and clean it up
     const doneWatcher = setInterval(() => {
