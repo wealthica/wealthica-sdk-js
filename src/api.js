@@ -55,6 +55,7 @@ class API {
     this._widgetOpened = false;
     this._widgetActive = false;
     this._features = null;
+    this._timeoutWatcher = null;
   }
 
   _init() {
@@ -290,8 +291,24 @@ class API {
           webhookURI,
         } = options;
 
+        // Check team features for quick_retry if not already in URL params
+        let effectiveFeatures = features;
+        if (!effectiveFeatures || !effectiveFeatures.split(',').map((f) => f.trim()).includes('quick_retry')) {
+          try {
+            const team = await this.getTeam();
+            if (team && Array.isArray(team.features) && team.features.includes('quick_retry')) {
+              // Add quick_retry to features if not already present
+              effectiveFeatures = effectiveFeatures
+                ? `${effectiveFeatures},quick_retry`
+                : 'quick_retry';
+            }
+          } catch (err) {
+            // Silently fail if team info can't be fetched - will use URL params only
+          }
+        }
+
         // Store features for timeout calculation
-        this._features = features;
+        this._features = effectiveFeatures;
         const { url, token } = await this.getConnectData({
           provider,
           providers,
@@ -300,7 +317,7 @@ class API {
           lang,
           theme,
           providersPerLine,
-          features,
+          features: effectiveFeatures,
           origin,
           webhookURI,
         });
@@ -382,10 +399,7 @@ class API {
     const hasQuickRetry = this._features && this._features.split(',').map((f) => f.trim()).includes('quick_retry');
     const timeoutMinutes = hasQuickRetry ? 30 : 10;
 
-    // Watch for widget timeout
-    const timeoutWatcher = setTimeout(() => {
-      this._closeWidgetWithError(400, 'Connection timeout');
-    }, timeoutMinutes * 60 * 1000);
+    this._updateTimeout(timeoutMinutes);
 
     // Watch for widget status (whether closed by user or successfully finished) and clean it up
     const doneWatcher = setInterval(() => {
@@ -399,11 +413,26 @@ class API {
         // If widget is marked as inactive, clear timeout and close it
         this._removeListeners();
         clearInterval(doneWatcher);
-        clearTimeout(timeoutWatcher);
+        if (this._timeoutWatcher) {
+          clearTimeout(this._timeoutWatcher);
+          this._timeoutWatcher = null;
+        }
 
         this._closeWidget();
       }
     }, 1000);
+  }
+
+  _updateTimeout(timeoutMinutes) {
+    // Clear existing timeout if any
+    if (this._timeoutWatcher) {
+      clearTimeout(this._timeoutWatcher);
+    }
+
+    // Set new timeout
+    this._timeoutWatcher = setTimeout(() => {
+      this._closeWidgetWithError(400, 'Connection timeout');
+    }, timeoutMinutes * 60 * 1000);
   }
 
   // eslint-disable-next-line camelcase
