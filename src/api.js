@@ -183,6 +183,7 @@ class API {
       providersPerLine,
       features,
       webhookURI,
+      flow,
     } = options;
     const { clientId, connectURL } = this.config;
 
@@ -214,6 +215,7 @@ class API {
       providers_per_line: (providersPerLine && ['1', '2'].includes(providersPerLine.toString())) ? providersPerLine.toString() : '2',
       features,
       webhook_uri: webhookURI,
+      flow, // track what flow is being used (investments, interac, payees)
     };
 
     // Cleanup blank params
@@ -287,6 +289,7 @@ class API {
           connectionType,
           origin,
           webhookURI,
+          flow,
         } = options;
         const { url, token } = await this.getConnectData({
           provider,
@@ -299,6 +302,7 @@ class API {
           features,
           origin,
           webhookURI,
+          flow, // track what flow is being used (investments, interac, payees)
         });
 
         this.iframe = appendWealthicaIframe();
@@ -415,6 +419,8 @@ class API {
     // Delete the iframe and form
     if (this.iframe) this.iframe.remove();
     if (this.form) this.form.remove();
+
+    this._triggerCallback(CALLBACK_EVENT, { event: 'APP_CLOSED' });
   }
 
   _triggerCallback(callback, payload = {}) {

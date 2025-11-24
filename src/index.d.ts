@@ -96,6 +96,7 @@ type ConnectDataOptions = {
   redirectURI: string;
   providers: Array<string> | undefined;
   providerGroups: Array<string> | undefined;
+  flow?: string;
 }
 
 type ConnectData = {
