@@ -17,7 +17,8 @@ interface APIInterface {
   getTeam(): string;
   getConnectData(options: ConnectDataOptions): Promise<ConnectData>
   connect(options?: ConnectDataOptions): APIInterface
-  reconnect(institutionId: string, options: ConnectDataOptions): APIUserInterface
+  reconnect(institutionId: string, options?: ConnectDataOptions): APIInterface
+  verifyMfa(institutionId: string, options?: ConnectDataOptions): APIInterface
   onConnection(callback: Function): APIInterface
   onError(callback: Function): APIInterface
   onEvent(callback: Function): APIInterface
@@ -88,9 +89,10 @@ type TokenOptions = {
 }
 
 type ConnectDataOptions = {
-  provider: string;
-  institutionId: string;
-  state: string;
+  provider?: string;
+  institutionId?: string;
+  connectionRoute?: string;
+  state?: string;
   origin: string | undefined;
   lang: string;
   redirectURI: string;

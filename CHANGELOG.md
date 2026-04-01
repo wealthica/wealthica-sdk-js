@@ -4,6 +4,9 @@ All notable changes to the Wealthica Connect SDK across versions will be documen
 
 ## [Unreleased]
 
+## [0.0.20] - 2026-04-01
+- Add `verifyMfa()` method and `connectionRoute` option for Verify Now widget support
+
 ## [0.0.19]
 - Add support for `quick_retry` feature flag to enable quick retry option on temporary connection failures
 - Add TypeScript definitions for `theme`, `providersPerLine`, `features`, and `webhookURI` in ConnectDataOptions
