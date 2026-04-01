@@ -376,7 +376,7 @@
 
 "wealthica-sdk-js@../../":
   "resolved" "file:../.."
-  "version" "0.0.12"
+  "version" "0.0.19"
   dependencies:
     "apisauce" "^2.1.1"
     "core-js" "^3.17.3"

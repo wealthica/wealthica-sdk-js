@@ -174,6 +174,7 @@ class API {
     const {
       provider,
       institutionId,
+      connectionRoute,
       state,
       origin = this.isBrowser ? window.location.origin : undefined,
       lang,
@@ -225,8 +226,10 @@ class API {
 
     let url = provider ? `${connectURL}/connect/${provider}` : `${connectURL}/connect`;
 
-    // Return reconnect url if institutionId is passed in
-    if (institutionId) {
+    // Return verify-mfa or reconnect url if institutionId is passed in
+    if (institutionId && connectionRoute === 'verify-mfa') {
+      url = `${connectURL}/verify-mfa/${institutionId}`;
+    } else if (institutionId) {
       url = `${connectURL}/reconnect/${institutionId}`;
     }
 
@@ -245,6 +248,16 @@ class API {
     }
 
     this._connect({ institutionId, ...options });
+
+    return this; // return the instance so we can chain the callbacks
+  }
+
+  verifyMfa(institutionId, options = {}) {
+    if (!institutionId || typeof institutionId !== 'string') {
+      throw new Error('Please provide a valid institutionId.');
+    }
+
+    this._connect({ institutionId, connectionRoute: 'verify-mfa', ...options });
 
     return this; // return the instance so we can chain the callbacks
   }
@@ -281,6 +294,7 @@ class API {
           providers,
           providerGroups,
           institutionId,
+          connectionRoute,
           lang,
           theme,
           providersPerLine,
@@ -297,6 +311,7 @@ class API {
           providers,
           providerGroups,
           institutionId,
+          connectionRoute,
           lang,
           theme,
           providersPerLine,

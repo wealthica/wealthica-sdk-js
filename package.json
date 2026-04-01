@@ -1,6 +1,6 @@
 {
   "name": "wealthica-sdk-js",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Official Wealthica JS SDK for the Browser & NodeJS",
   "author": "Wealthica Financial Technology Inc. <hello@wealthica.com> (https://wealthica.com/)",
   "license": "MIT",
@@ -35,7 +35,7 @@
     "lint-fix": "eslint --fix ."
   },
   "dependencies": {
-    "apisauce": "^2.1.1",
+    "apisauce": "^3.2.2",
     "core-js": "^3.17.3",
     "jsonwebtoken": "^9.0.0",
     "regenerator-runtime": "^0.13.9"
@@ -45,7 +45,7 @@
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.15.0",
     "@babel/register": "^7.15.3",
-    "axios-mock-adapter": "^1.20.0",
+    "axios-mock-adapter": "^2.1.0",
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^10.2.4",
     "eslint": "^7.32.0",

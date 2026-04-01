@@ -50,6 +50,8 @@ $(document).ready(() => {
     }).onError((error) => {
       console.log('connection error', error);
       $('#response_heading').html(`Error connecting account: <b class="text-danger">${JSON.stringify(error)}</b>`);
+    }).onEvent((name, data) => {
+      console.log('event', name, data);
     });
   });
 
@@ -74,6 +76,31 @@ $(document).ready(() => {
     }).onError((error) => {
       console.log('reconnection error', error);
       $('#response_heading').html(`Error reconnecting account: <b class="text-danger">${JSON.stringify(error)}</b>`);
+    });
+  });
+
+  $('#verify_mfa').click(() => {
+    const institutionId = $('#institution_id').val();
+    if (!institutionId) {
+      alert('Must enter an Institution ID first.');
+      return;
+    }
+
+    login();
+
+    extraOptions = $('#extra_options').val().trim() || undefined;
+    if (extraOptions) extraOptions = JSON.parse(extraOptions);
+
+    user.verifyMfa(institutionId, {
+      connectionType: constants.WEALTHICA_CONNECT_TYPE,
+      ...extraOptions,
+    }).onConnection((institution, data) => {
+      console.log('verify mfa success', institution, data);
+      $('#institution_id').val(institution);
+      $('#response_heading').html(`MFA verified successfully for ID: ${institution}`);
+    }).onError((error) => {
+      console.log('verify mfa error', error);
+      $('#response_heading').html(`Error verifying MFA: <b class="text-danger">${JSON.stringify(error)}</b>`);
     });
   });
 
