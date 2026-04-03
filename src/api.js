@@ -180,6 +180,7 @@ class API {
       lang,
       redirectURI = this.config.redirectURI,
       providers,
+      disabledProviders,
       providerGroups = ['core'],
       theme,
       providersPerLine,
@@ -211,6 +212,9 @@ class API {
       origin,
       // 'provider' param in priority, skip 'providers' param if 'provider' is set
       providers: !provider && Array.isArray(providers) && providers.length ? providers.join(',') : undefined,
+      disabled_providers:
+        disabledProviders && Array.isArray(disabledProviders) && disabledProviders.length
+          ? disabledProviders.join(',') : undefined,
       provider_groups: providerGroups.join(','),
       theme: ['light', 'dark'].includes(theme) ? theme : 'light',
       providers_per_line: (providersPerLine && ['1', '2'].includes(providersPerLine.toString())) ? providersPerLine.toString() : '2',
@@ -292,6 +296,7 @@ class API {
         const {
           provider,
           providers,
+          disabledProviders,
           providerGroups,
           institutionId,
           connectionRoute,
@@ -309,6 +314,7 @@ class API {
         const { url, token } = await this.getConnectData({
           provider,
           providers,
+          disabledProviders,
           providerGroups,
           institutionId,
           connectionRoute,
@@ -421,10 +427,11 @@ class API {
     }, 1000);
   }
 
-  // eslint-disable-next-line camelcase
+  /* eslint-disable camelcase */
   _closeWidgetWithError(error_type, message) {
     this._closeWidget();
     this._triggerCallback(CALLBACK_ERROR, { error: { error_type, message } });
+    /* eslint-enable camelcase */
   }
 
   _closeWidget() {

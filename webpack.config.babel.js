@@ -47,7 +47,7 @@ const browserConfig = merge(baseConfig, {
     },
   },
   plugins: [
-    new NodePolyfillPlugin(),
+    new NodePolyfillPlugin({ additionalAliases: ['process'] }),
   ],
 });
 
@@ -80,7 +80,7 @@ const browserES5Config = merge(baseConfig, {
     globalObject: 'this', // workaround webpack using 'self' by default
   },
   plugins: [
-    new NodePolyfillPlugin(),
+    new NodePolyfillPlugin({ additionalAliases: ['process'] }),
     new CopyPlugin({
       patterns: [
         {
