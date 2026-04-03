@@ -4,6 +4,11 @@ All notable changes to the Wealthica Connect SDK across versions will be documen
 
 ## [Unreleased]
 
+## [0.0.21] - 2026-04-03
+- Add `disabledProviders` option to `connect()` and `getConnectData()` for excluding specific providers from the list
+- Upgrade dependencies (Babel, webpack, Jest, ESLint, and others)
+- Require Node.js >= 22
+
 ## [0.0.20] - 2026-04-01
 - Add `verifyMfa()` method and `connectionRoute` option for Verify Now widget support
 

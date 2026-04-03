@@ -165,7 +165,7 @@ token = await user.getToken(); // fetches and returns a new token
 token = await user.getToken({ minimumLifeTime: 600 }); // fetches and returns another new token
 ```
 
-#### user.getConnectData({ provider, redirectURI, state, lang, theme, providersPerLine, webhookURI })
+#### user.getConnectData({ provider, redirectURI, state, lang, theme, providersPerLine, disabledProviders, webhookURI })
 
 This method returns a Wealthica Connect URL and authentication token for user to connect an institution.
 
@@ -188,6 +188,7 @@ const { url, token } = await user.getConnectData({
   state: 'YOUR_APP_STATE', // optional
   lang: 'en', // optional (en | es | fr | it), 'en' by default
   providers: ['wise', 'stockchase'], // optional, ignored if `provider` is also passed in.
+  disabledProviders: ['questrade', 'wealthsimple'], // optional, exclude specific providers from the list.
   providerGroups: ['core', 'thirdparty'], // optional, ['core'] by default
   theme: 'light', // optional (light | dark), 'light' by default
   providersPerLine: 1, // optional (1 | 2), 2 by default
@@ -228,7 +229,7 @@ const user2 = wealthica.login('USER_ID_2');
 const { url: url2, token } = await user2.getConnectData();
 ```
 
-#### user.connect({ provider, providers, institutionId, lang, theme, providersPerLine, features, origin, webhookURI })
+#### user.connect({ provider, providers, disabledProviders, institutionId, lang, theme, providersPerLine, features, origin, webhookURI })
 
 This method starts the Wealthica Connect process inside your webpage/app for user to connect their institution.
 

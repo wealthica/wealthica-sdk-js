@@ -4,8 +4,14 @@ module.exports = {
   rules: {
     'no-underscore-dangle': 'off',
   },
-  ignorePatterns: ['example/react-native'],
+  ignorePatterns: ['example'],
   overrides: [
+    {
+      files: ['webpack.config.babel.js'],
+      rules: {
+        'import/no-import-module-exports': 'off',
+      },
+    },
     {
       files: ['**/__tests__/**/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)', '**/__mocks__/**/*.{j,t}s?(x)'],
       env: {
