@@ -47,8 +47,14 @@ ESLint with `airbnb-base`. `no-underscore-dangle` is disabled (private methods u
 
 ## Release Process
 
-```
-npm version patch  # or minor/major
+Published to npm as `wealthica-sdk-js` (see `name` in `package.json`).
+
+```bash
+npm version patch        # or minor / major
 git push && git push --tags
-npm publish
+npm publish              # `prepublishOnly` runs the build automatically
 ```
+
+Verify the new version is live on https://www.npmjs.com/package/wealthica-sdk-js.
+
+There is no separate staging environment for this package — every published version is available to all consumers. Test changes locally with `npm link` or by pointing a consumer at a tarball before publishing.
