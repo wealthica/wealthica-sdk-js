@@ -93,16 +93,16 @@ type ConnectDataOptions = {
   institutionId?: string;
   connectionRoute?: string;
   state?: string;
-  origin: string | undefined;
-  lang: string;
-  redirectURI: string;
-  providers: Array<string> | undefined;
-  disabledProviders: Array<string> | undefined;
-  providerGroups: Array<string> | undefined;
-  theme: string;
-  providersPerLine: number | string;
-  features: string;
-  webhookURI: string;
+  origin?: string;
+  lang?: string;
+  redirectURI?: string;
+  providers?: Array<string>;
+  disabledProviders?: Array<string>;
+  providerGroups?: Array<string>;
+  theme?: string;
+  providersPerLine?: number | string;
+  features?: string;
+  webhookURI?: string;
 }
 
 type ConnectData = {
