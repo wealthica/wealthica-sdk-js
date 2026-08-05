@@ -193,7 +193,7 @@ const { url, token } = await user.getConnectData({
   theme: 'light', // optional (light | dark), 'light' by default
   providersPerLine: 1, // optional (1 | 2), 2 by default
   features: 'feature1,feature2', // optional, a comma-separated list of features. undefined by default
-  closeButton: false, // optional, `false` hides the widget's header "X" close button (for hosts drawing their own close control)
+  closeButton: false, // optional boolean, `false` hides the widget's header "X" close button (for hosts drawing their own close control). Non-boolean values are ignored.
   webhookURI: 'YOUR_WEBHOOK_URI', // optional, URL to receive webhook notifications (must be HTTPS)
 });
 // {
