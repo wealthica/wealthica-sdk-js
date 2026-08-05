@@ -185,6 +185,7 @@ class API {
       theme,
       providersPerLine,
       features,
+      closeButton,
       webhookURI,
     } = options;
     const { clientId, connectURL } = this.config;
@@ -219,6 +220,7 @@ class API {
       theme: ['light', 'dark'].includes(theme) ? theme : 'light',
       providers_per_line: (providersPerLine && ['1', '2'].includes(providersPerLine.toString())) ? providersPerLine.toString() : '2',
       features,
+      close_button: typeof closeButton === 'boolean' ? String(closeButton) : undefined,
       webhook_uri: webhookURI,
     };
 
@@ -304,6 +306,7 @@ class API {
           theme,
           providersPerLine,
           features,
+          closeButton,
           connectionType,
           origin,
           webhookURI,
@@ -322,6 +325,7 @@ class API {
           theme,
           providersPerLine,
           features,
+          closeButton,
           origin,
           webhookURI,
         });

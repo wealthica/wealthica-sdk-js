@@ -205,6 +205,22 @@ module.exports.testGetConnectDataBehavior = function ({ isBrowser } = {}) {
       expect(url4).not.toContain('state=');
     });
 
+    test('should pass `closeButton` through as `close_button`', async () => {
+      const { url } = await this.user.getConnectData({ closeButton: false });
+      expect(url).toContain('close_button=false');
+
+      const { url: url2 } = await this.user.getConnectData({ closeButton: true });
+      expect(url2).toContain('close_button=true');
+    });
+
+    test('should not send `close_button` unless `closeButton` is a boolean', async () => {
+      const { url } = await this.user.getConnectData();
+      expect(url).not.toContain('close_button=');
+
+      const { url: url2 } = await this.user.getConnectData({ closeButton: 'false' });
+      expect(url2).not.toContain('close_button=');
+    });
+
     test('should ignore unsupported params', async () => {
       const { url } = await this.user.getConnectData({ not: 'supported' });
       expect(url).not.toContain('not=');
