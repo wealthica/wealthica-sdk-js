@@ -102,6 +102,7 @@ type ConnectDataOptions = {
   theme: string;
   providersPerLine: number | string;
   features: string;
+  closeButton?: boolean;
   webhookURI: string;
 }
 

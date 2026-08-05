@@ -165,7 +165,7 @@ token = await user.getToken(); // fetches and returns a new token
 token = await user.getToken({ minimumLifeTime: 600 }); // fetches and returns another new token
 ```
 
-#### user.getConnectData({ provider, redirectURI, state, lang, theme, providersPerLine, disabledProviders, webhookURI })
+#### user.getConnectData({ provider, redirectURI, state, lang, theme, providersPerLine, disabledProviders, closeButton, webhookURI })
 
 This method returns a Wealthica Connect URL and authentication token for user to connect an institution.
 
@@ -193,6 +193,7 @@ const { url, token } = await user.getConnectData({
   theme: 'light', // optional (light | dark), 'light' by default
   providersPerLine: 1, // optional (1 | 2), 2 by default
   features: 'feature1,feature2', // optional, a comma-separated list of features. undefined by default
+  closeButton: false, // optional boolean, `false` hides the widget's header "X" close button (for hosts drawing their own close control). Non-boolean values are ignored.
   webhookURI: 'YOUR_WEBHOOK_URI', // optional, URL to receive webhook notifications (must be HTTPS)
 });
 // {
@@ -229,7 +230,7 @@ const user2 = wealthica.login('USER_ID_2');
 const { url: url2, token } = await user2.getConnectData();
 ```
 
-#### user.connect({ provider, providers, disabledProviders, institutionId, lang, theme, providersPerLine, features, origin, webhookURI })
+#### user.connect({ provider, providers, disabledProviders, institutionId, lang, theme, providersPerLine, features, closeButton, origin, webhookURI })
 
 This method starts the Wealthica Connect process inside your webpage/app for user to connect their institution.
 
@@ -252,7 +253,7 @@ user.connect({
 });
 ```
 
-#### user.reconnect(institutionId, { lang, theme, features, origin, webhookURI })
+#### user.reconnect(institutionId, { lang, theme, features, closeButton, origin, webhookURI })
 
 This method starts the Wealthica Connect process to re-connect an existing institution that has expired/revoked credentials.
 
