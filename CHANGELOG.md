@@ -3,6 +3,7 @@
 All notable changes to the Wealthica Connect SDK across versions will be documented in this file.
 
 ## [Unreleased]
+- Upgrade dependencies: axios 1.14.0 -> 1.20.0 in the browser bundle (security fixes), webpack toolchain within current majors, `copy-webpack-plugin` 12 -> 14; `terser-webpack-plugin` is now an explicit devDependency
 
 ## [0.0.21] - 2026-04-03
 - Add `disabledProviders` option to `connect()` and `getConnectData()` for excluding specific providers from the list
