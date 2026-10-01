@@ -121,7 +121,16 @@ class API {
     }
 
     const { token } = (response.data || response);
-    const payload = jwt.decode(token);
+    const { secret } = this.config;
+    let payload;
+    try {
+      // Verify the signature whenever we hold the signing secret (Node/server flow).
+      // Client flows (authEndpoint/authorizer) never receive the secret, so we can only
+      // decode there; the resulting token is still verified server-side on every API call.
+      payload = secret ? jwt.verify(token, secret) : jwt.decode(token);
+    } catch (error) {
+      throw new Error('Received an invalid or tampered authentication token.');
+    }
     this._token = { token, payload };
 
     return this._token.token;
