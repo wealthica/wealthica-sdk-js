@@ -19,6 +19,9 @@ const baseConfig = {
     minimizer: [
       new TerserPlugin({
         extractComments: false,
+        // terser-webpack-plugin >= 5.6 otherwise infers ES2020 from webpack's
+        // output.environment and emits `??` in the minified CDN file
+        terserOptions: { ecma: 2015 },
       }),
     ],
   },
