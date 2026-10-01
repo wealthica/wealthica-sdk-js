@@ -2,7 +2,7 @@
 
 All notable changes to the Wealthica Connect SDK across versions will be documented in this file.
 
-## [Unreleased]
+## [0.0.22] - 2026-10-01
 - Security: bundled axios 1.14.0 -> 1.20.0 (fixes SSRF via `no_proxy`, header-injection and proxy-cleartext advisories). Node build: HTTPS requests through an env-configured HTTP proxy now use CONNECT tunnelling (axios >= 1.16.1)
 - Build toolchain upgraded within current majors; `copy-webpack-plugin` 12 -> 14, `terser-webpack-plugin` pinned as an explicit devDependency with `ecma: 2015` so the minified bundle keeps its ES level
 
