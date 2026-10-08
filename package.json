@@ -35,7 +35,7 @@
   "scripts": {
     "prebuild": "rimraf dist lib",
     "build": "webpack",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "node -e \"console.error('Publishing runs in CI only: merge the version bump, then push a vX.Y.Z tag (see CLAUDE.md)');process.exit(1)\"",
     "test": "jest",
     "watch:test": "jest --watch",
     "lint": "eslint .",

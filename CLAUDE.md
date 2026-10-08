@@ -47,14 +47,23 @@ ESLint with `airbnb-base`. `no-underscore-dangle` is disabled (private methods u
 
 ## Release Process
 
-Published to npm as `wealthica-sdk-js` (see `name` in `package.json`) by GitHub Actions (`.github/workflows/publish.yml`), never from a developer machine: a local `npm publish` bundles whatever `node_modules` the machine has instead of the lockfile (that is how 0.0.21 shipped axios 1.14.0).
+Published to npm as `wealthica-sdk-js` (see `name` in `package.json`) by GitHub Actions (`.github/workflows/publish.yml`), never from a developer machine: a local `npm publish` bundles whatever `node_modules` the machine has instead of the lockfile (that is how 0.0.21 shipped axios 1.14.0). `prepublishOnly` fails on purpose, so a local `npm publish` stops with a pointer here.
+
+`main` only takes squash-merged PRs, so the version bump goes through a PR and the tag goes on the squash commit:
 
 ```bash
-npm version patch        # or minor / major — creates a "vX.Y.Z" tag
-git push && git push origin vX.Y.Z   # the tag push triggers the publish workflow
+# 1. On a branch: bump the version without tagging, add a CHANGELOG.md entry, open a PR, squash-merge it
+npm version patch --no-git-tag-version   # or minor / major
+
+# 2. Tag the squash commit on main and push the tag; this starts the publish workflow
+git fetch origin
+git tag vX.Y.Z <squash-commit-sha>
+git push origin vX.Y.Z
+
+# 3. Approve the `npm` environment deployment in the workflow run (Actions tab)
 ```
 
-The workflow installs with `--frozen-lockfile`, fails if the tag does not match the `package.json` version, runs lint, tests and build, fails if `dist/wealthica.min.js` does not inline the axios version from `yarn.lock`, then runs `npm publish --provenance`. npm auth is trusted publishing (OIDC, configured in the package settings on npmjs.com), with an `NPM_TOKEN` repo secret as the fallback.
+The workflow only runs for `vX.Y.Z` tags (no prereleases). The `build` job fails if the tag does not match the `package.json` version or its commit is not on `main`, installs with `--frozen-lockfile --ignore-scripts`, runs lint, tests and build, fails if the bundled axios is not the version from `yarn.lock`, and packs the tarball. The `publish` job (environment `npm`, the only job with `id-token: write`) publishes that tarball with `npm publish --provenance`, authenticated by npm trusted publishing (OIDC) — there is no npm token. The trusted publisher on npmjs.com is GitHub Actions, organization `wealthica`, repository `wealthica-sdk-js`, workflow `publish.yml`, environment `npm`; renaming the workflow file or the environment breaks publishing until it is updated there.
 
 Check the run in the Actions tab, then verify the new version shows the provenance badge on https://www.npmjs.com/package/wealthica-sdk-js.
 

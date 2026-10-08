@@ -23,14 +23,14 @@ describe('Wealthica History resource', () => {
     test('should forward query params', async () => {
       this.userApiMock.onGet().reply(200, [{ test: 'data' }]);
       await this.user.history.getList({
-        institutions: ['test'],
+        institutions: ['a', 'b'],
         from: '2021-01-01',
         to: '2021-10-01',
         investments: 'aa:bb:cc',
         anything: 'else',
       });
       expect(this.userApiMock.history.get[0].url).toBe(
-        '/history?institutions=test&from=2021-01-01&to=2021-10-01&investments=aa%3Abb%3Acc&anything=else',
+        '/history?institutions=a%2Cb&from=2021-01-01&to=2021-10-01&investments=aa%3Abb%3Acc&anything=else',
       );
     });
 
