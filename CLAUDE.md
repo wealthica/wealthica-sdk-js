@@ -47,14 +47,24 @@ ESLint with `airbnb-base`. `no-underscore-dangle` is disabled (private methods u
 
 ## Release Process
 
-Published to npm as `wealthica-sdk-js` (see `name` in `package.json`).
+Published to npm as `wealthica-sdk-js` (see `name` in `package.json`) by GitHub Actions (`.github/workflows/publish.yml`), never from a developer machine: a local `npm publish` bundles whatever `node_modules` the machine has instead of the lockfile (that is how 0.0.21 shipped axios 1.14.0). `prepublishOnly` fails on purpose, so a local `npm publish` stops with a pointer here.
+
+`main` only takes squash-merged PRs, so the version bump goes through a PR and the tag goes on the squash commit:
 
 ```bash
-npm version patch        # or minor / major
-git push && git push --tags
-npm publish              # `prepublishOnly` runs the build automatically
+# 1. On a branch: bump the version without tagging, add a CHANGELOG.md entry, open a PR, squash-merge it
+npm version patch --no-git-tag-version   # or minor / major
+
+# 2. Tag the squash commit on main and push the tag; this starts the publish workflow
+git fetch origin
+git tag vX.Y.Z <squash-commit-sha>
+git push origin vX.Y.Z
+
+# 3. Approve the `npm` environment deployment in the workflow run (Actions tab)
 ```
 
-Verify the new version is live on https://www.npmjs.com/package/wealthica-sdk-js.
+The workflow only runs for `vX.Y.Z` tags (no prereleases). The `build` job fails if the tag does not match the `package.json` version or its commit is not on `main`, installs with `--frozen-lockfile --ignore-scripts`, runs lint, tests and build, fails if the bundled axios is not the version from `yarn.lock`, and packs the tarball. The `publish` job (environment `npm`, the only job with `id-token: write`) publishes that tarball with `npm publish --provenance`, authenticated by npm trusted publishing (OIDC) — there is no npm token. The trusted publisher on npmjs.com is GitHub Actions, organization `wealthica`, repository `wealthica-sdk-js`, workflow `publish.yml`, environment `npm`; renaming the workflow file or the environment breaks publishing until it is updated there.
+
+Check the run in the Actions tab, then verify the new version shows the provenance badge on https://www.npmjs.com/package/wealthica-sdk-js.
 
 There is no separate staging environment for this package — every published version is available to all consumers. Test changes locally with `npm link` or by pointing a consumer at a tarball before publishing.
