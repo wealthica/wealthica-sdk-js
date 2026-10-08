@@ -4,6 +4,10 @@
   "description": "Official Wealthica JS SDK for the Browser & NodeJS",
   "author": "Wealthica Financial Technology Inc. <hello@wealthica.com> (https://wealthica.com/)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wealthica/wealthica-sdk-js.git"
+  },
   "engines": {
     "node": ">=22"
   },

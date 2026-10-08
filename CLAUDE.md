@@ -47,14 +47,15 @@ ESLint with `airbnb-base`. `no-underscore-dangle` is disabled (private methods u
 
 ## Release Process
 
-Published to npm as `wealthica-sdk-js` (see `name` in `package.json`).
+Published to npm as `wealthica-sdk-js` (see `name` in `package.json`) by GitHub Actions (`.github/workflows/publish.yml`), never from a developer machine: a local `npm publish` bundles whatever `node_modules` the machine has instead of the lockfile (that is how 0.0.21 shipped axios 1.14.0).
 
 ```bash
-npm version patch        # or minor / major
-git push && git push --tags
-npm publish              # `prepublishOnly` runs the build automatically
+npm version patch        # or minor / major — creates a "vX.Y.Z" tag
+git push && git push origin vX.Y.Z   # the tag push triggers the publish workflow
 ```
 
-Verify the new version is live on https://www.npmjs.com/package/wealthica-sdk-js.
+The workflow installs with `--frozen-lockfile`, fails if the tag does not match the `package.json` version, runs lint, tests and build, fails if `dist/wealthica.min.js` does not inline the axios version from `yarn.lock`, then runs `npm publish --provenance`. npm auth is trusted publishing (OIDC, configured in the package settings on npmjs.com), with an `NPM_TOKEN` repo secret as the fallback.
+
+Check the run in the Actions tab, then verify the new version shows the provenance badge on https://www.npmjs.com/package/wealthica-sdk-js.
 
 There is no separate staging environment for this package — every published version is available to all consumers. Test changes locally with `npm link` or by pointing a consumer at a tarball before publishing.
