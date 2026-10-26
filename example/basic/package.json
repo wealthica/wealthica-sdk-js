@@ -14,5 +14,8 @@
     "express": "^4.17.1",
     "renderjson": "^1.4.0",
     "wealthica-sdk-js": "../../"
+  },
+  "overrides": {
+    "body-parser": "^1.20.9"
   }
 }
